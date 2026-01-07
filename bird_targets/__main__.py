@@ -170,15 +170,20 @@ def cmd_run(args: argparse.Namespace) -> int:
     # Create output directory
     out_path.mkdir(parents=True, exist_ok=True)
 
-    # Load habitat scores if rules file exists
+    # Load habitat scores and rules if rules file exists
     habitat_scores = {}
+    habitat_rules = {}
     habitat_rules_path = (
         Path(args.habitat_rules) if args.habitat_rules else DEFAULT_HABITAT_RULES
     )
     if habitat_rules_path.exists():
-        # Try to load public lands from fixtures or use empty
         import json
 
+        # Load raw rules for common names
+        with open(habitat_rules_path) as f:
+            habitat_rules = json.load(f)
+
+        # Try to load public lands from fixtures or use empty
         public_lands = {"features": []}
         public_lands_path = Path("tests/fixtures/public_lands.json")
         if public_lands_path.exists():
@@ -192,6 +197,7 @@ def cmd_run(args: argparse.Namespace) -> int:
     scores = calculate_scores_from_cache(
         cache,
         habitat_scores=habitat_scores,
+        habitat_rules=habitat_rules,
         observer_weight=args.observer_weight,
         habitat_weight=args.habitat_weight,
     )

@@ -2,24 +2,28 @@
   "_comment": "Species habitat rules for Durham County, NC. Weight indicates confidence in habitat-based prediction (0-1).",
 
   "brdowl": {
+    "common_name": "Barred Owl",
     "habitats": ["mature_forest", "riparian", "mixed_forest"],
     "seasonality": ["all_year"],
     "weight": 0.8,
     "notes": "Barred Owl - requires mature forest with large trees"
   },
   "easowl1": {
+    "common_name": "Eastern Screech-Owl",
     "habitats": ["mixed_forest", "suburban_edge", "riparian"],
     "seasonality": ["all_year"],
     "weight": 0.7,
     "notes": "Eastern Screech-Owl - adaptable, uses cavities"
   },
   "grhowl": {
+    "common_name": "Great Horned Owl",
     "habitats": ["mature_forest", "mixed_forest", "open_fields"],
     "seasonality": ["all_year"],
     "weight": 0.6,
     "notes": "Great Horned Owl - wide habitat tolerance"
   },
   "nswowl": {
+    "common_name": "Northern Saw-whet Owl",
     "habitats": ["mixed_forest", "mature_forest"],
     "seasonality": ["winter"],
     "weight": 0.5,
@@ -27,18 +31,21 @@
   },
 
   "amewoo": {
+    "common_name": "American Woodcock",
     "habitats": ["riparian", "mixed_forest", "wetland"],
     "seasonality": ["winter", "migration"],
     "weight": 0.7,
     "notes": "American Woodcock - damp woodlands, forest edges"
   },
   "norbob": {
+    "common_name": "Northern Bobwhite",
     "habitats": ["open_fields", "suburban_edge", "mixed_forest"],
     "seasonality": ["all_year"],
     "weight": 0.6,
     "notes": "Northern Bobwhite - declining, needs brushy edges"
   },
   "wiltur": {
+    "common_name": "Wild Turkey",
     "habitats": ["mature_forest", "mixed_forest", "open_fields"],
     "seasonality": ["all_year"],
     "weight": 0.7,
@@ -46,12 +53,14 @@
   },
 
   "virrai": {
+    "common_name": "Virginia Rail",
     "habitats": ["wetland", "riparian"],
     "seasonality": ["breeding", "migration"],
     "weight": 0.5,
     "notes": "Virginia Rail - marshes, difficult to detect"
   },
   "sora": {
+    "common_name": "Sora",
     "habitats": ["wetland", "riparian"],
     "seasonality": ["migration"],
     "weight": 0.4,
@@ -59,6 +68,7 @@
   },
 
   "logshr": {
+    "common_name": "Loggerhead Shrike",
     "habitats": ["open_fields", "suburban_edge"],
     "seasonality": ["all_year"],
     "weight": 0.5,
@@ -66,60 +76,70 @@
   },
 
   "kenwar": {
+    "common_name": "Kentucky Warbler",
     "habitats": ["mature_forest", "riparian"],
     "seasonality": ["breeding"],
     "weight": 0.7,
     "notes": "Kentucky Warbler - dense understory in moist forest"
   },
   "worwar": {
+    "common_name": "Worm-eating Warbler",
     "habitats": ["mature_forest"],
     "seasonality": ["breeding"],
     "weight": 0.7,
     "notes": "Worm-eating Warbler - forested slopes"
   },
   "woothr": {
+    "common_name": "Wood Thrush",
     "habitats": ["mature_forest", "riparian", "mixed_forest"],
     "seasonality": ["breeding"],
     "weight": 0.8,
     "notes": "Wood Thrush - interior forest, declining"
   },
   "ovenbi1": {
+    "common_name": "Ovenbird",
     "habitats": ["mature_forest"],
     "seasonality": ["breeding"],
     "weight": 0.7,
     "notes": "Ovenbird - forest floor"
   },
   "bkbwar": {
+    "common_name": "Black-and-white Warbler",
     "habitats": ["mature_forest", "mixed_forest"],
     "seasonality": ["migration"],
     "weight": 0.6,
     "notes": "Black-and-white Warbler - bark forager"
   },
   "btnwar": {
+    "common_name": "Black-throated Green Warbler",
     "habitats": ["mature_forest", "mixed_forest"],
     "seasonality": ["migration"],
     "weight": 0.5,
     "notes": "Black-throated Green Warbler - migration"
   },
   "prawar": {
+    "common_name": "Prairie Warbler",
     "habitats": ["open_fields", "suburban_edge"],
     "seasonality": ["breeding"],
     "weight": 0.5,
     "notes": "Prairie Warbler - shrubby areas"
   },
   "hoowar": {
+    "common_name": "Hooded Warbler",
     "habitats": ["mature_forest", "riparian"],
     "seasonality": ["breeding"],
     "weight": 0.6,
     "notes": "Hooded Warbler - forest understory"
   },
   "louwat": {
+    "common_name": "Louisiana Waterthrush",
     "habitats": ["riparian", "wetland"],
     "seasonality": ["breeding"],
     "weight": 0.6,
     "notes": "Louisiana Waterthrush - rocky streams"
   },
   "prowar": {
+    "common_name": "Prothonotary Warbler",
     "habitats": ["mature_forest", "mixed_forest"],
     "seasonality": ["breeding"],
     "weight": 0.5,
@@ -127,18 +147,21 @@
   },
 
   "pilwoo": {
+    "common_name": "Pileated Woodpecker",
     "habitats": ["mature_forest"],
     "seasonality": ["all_year"],
     "weight": 0.8,
     "notes": "Pileated Woodpecker - large forest tracts"
   },
   "rehwoo": {
+    "common_name": "Red-headed Woodpecker",
     "habitats": ["mature_forest", "open_fields"],
     "seasonality": ["all_year"],
     "weight": 0.5,
     "notes": "Red-headed Woodpecker - declining, needs dead trees"
   },
   "haiwoo": {
+    "common_name": "Hairy Woodpecker",
     "habitats": ["mature_forest", "mixed_forest"],
     "seasonality": ["all_year"],
     "weight": 0.6,
@@ -146,12 +169,14 @@
   },
 
   "brnthr": {
+    "common_name": "Brown Thrasher",
     "habitats": ["suburban_edge", "open_fields", "mixed_forest"],
     "seasonality": ["breeding"],
     "weight": 0.6,
     "notes": "Brown Thrasher - dense shrubs"
   },
   "grycat": {
+    "common_name": "Gray Catbird",
     "habitats": ["suburban_edge", "riparian", "mixed_forest"],
     "seasonality": ["breeding"],
     "weight": 0.7,
@@ -159,12 +184,14 @@
   },
 
   "reshaw": {
+    "common_name": "Red-shouldered Hawk",
     "habitats": ["mature_forest", "mixed_forest", "riparian"],
     "seasonality": ["all_year"],
     "weight": 0.8,
     "notes": "Red-shouldered Hawk - wooded areas near water"
   },
   "coohaw": {
+    "common_name": "Cooper's Hawk",
     "habitats": ["mature_forest", "mixed_forest", "suburban_edge"],
     "seasonality": ["all_year"],
     "weight": 0.7,
@@ -172,12 +199,14 @@
   },
 
   "sumtan": {
+    "common_name": "Summer Tanager",
     "habitats": ["mature_forest", "mixed_forest"],
     "seasonality": ["breeding"],
     "weight": 0.7,
     "notes": "Summer Tanager - forest canopy"
   },
   "scatan": {
+    "common_name": "Scarlet Tanager",
     "habitats": ["mature_forest"],
     "seasonality": ["breeding"],
     "weight": 0.7,
@@ -185,12 +214,14 @@
   },
 
   "bewwre": {
+    "common_name": "Bewick's Wren",
     "habitats": ["suburban_edge", "open_fields"],
     "seasonality": ["all_year"],
     "weight": 0.4,
     "notes": "Bewick's Wren - rare/extirpated in east"
   },
   "sedwre1": {
+    "common_name": "Sedge Wren",
     "habitats": ["wetland", "open_fields"],
     "seasonality": ["winter", "migration"],
     "weight": 0.4,
@@ -198,12 +229,14 @@
   },
 
   "yelwar": {
+    "common_name": "Yellow Warbler",
     "habitats": ["riparian", "wetland", "suburban_edge"],
     "seasonality": ["breeding"],
     "weight": 0.6,
     "notes": "Yellow Warbler - shrubby wetlands"
   },
   "comyel": {
+    "common_name": "Common Yellowthroat",
     "habitats": ["wetland", "riparian", "open_fields"],
     "seasonality": ["breeding"],
     "weight": 0.7,

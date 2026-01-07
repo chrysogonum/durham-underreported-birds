@@ -262,7 +262,11 @@ def calculate_underreported_scores(
 
     # Load habitat scores if rules path provided
     habitat_scores: dict = {}
+    habitat_rules: dict = {}
     if habitat_rules_path and habitat_rules_path.exists():
+        # Load raw rules to get common names
+        with open(habitat_rules_path) as f:
+            habitat_rules = json.load(f)
         public_lands_path = fixtures_path / "public_lands.json"
         if public_lands_path.exists():
             with open(public_lands_path) as f:
@@ -293,8 +297,10 @@ def calculate_underreported_scores(
     # Also include species from habitat rules (they're plausible by definition)
     for code in habitat_scores:
         if code not in excluded_codes and code not in all_species:
-            # Get name from habitat score if available
-            all_species[code] = code  # Fallback to code as name
+            # Get common name from habitat rules, fallback to code
+            rule = habitat_rules.get(code, {})
+            name = rule.get("common_name", code) if isinstance(rule, dict) else code
+            all_species[code] = name
 
     # Calculate scores for each species
     scores: list[SpeciesScore] = []
@@ -356,6 +362,7 @@ def calculate_scores_from_data(
     exclusions: dict,
     apply_plausibility_filter: bool = True,
     habitat_scores: dict | None = None,
+    habitat_rules: dict | None = None,
     observer_weight: float = DEFAULT_OBSERVER_WEIGHT,
     habitat_weight: float = DEFAULT_HABITAT_WEIGHT,
 ) -> list[SpeciesScore]:
@@ -371,6 +378,7 @@ def calculate_scores_from_data(
             filter (default True). Species must be in ≥3 adjacent counties OR
             have ≥25 total observations across adjacent counties.
         habitat_scores: Optional dict of species_code -> HabitatScore
+        habitat_rules: Optional dict of species_code -> rule dict (for common names)
         observer_weight: Weight for observer-based expectation (alpha, default 0.7)
         habitat_weight: Weight for habitat-based expectation (beta, default 0.3)
 
@@ -380,6 +388,7 @@ def calculate_scores_from_data(
     from bird_targets.habitat_model import get_habitat_rationale
 
     habitat_scores = habitat_scores or {}
+    habitat_rules = habitat_rules or {}
 
     # Build set of excluded species codes
     excluded_codes = set()
@@ -412,7 +421,10 @@ def calculate_scores_from_data(
     # Also include species from habitat rules (they're plausible by definition)
     for code in habitat_scores:
         if code not in excluded_codes and code not in all_species:
-            all_species[code] = code  # Fallback to code as name
+            # Get common name from habitat rules, fallback to code
+            rule = habitat_rules.get(code, {})
+            name = rule.get("common_name", code) if isinstance(rule, dict) else code
+            all_species[code] = name
 
     # Calculate scores for each species
     scores: list[SpeciesScore] = []
@@ -471,6 +483,7 @@ def calculate_scores_from_data(
 def calculate_scores_from_cache(
     cache: "EBirdDataCache",
     habitat_scores: dict | None = None,
+    habitat_rules: dict | None = None,
     observer_weight: float = DEFAULT_OBSERVER_WEIGHT,
     habitat_weight: float = DEFAULT_HABITAT_WEIGHT,
 ) -> list[SpeciesScore]:
@@ -479,6 +492,7 @@ def calculate_scores_from_cache(
     Args:
         cache: EBirdDataCache instance with fetched data
         habitat_scores: Optional dict of species_code -> HabitatScore
+        habitat_rules: Optional dict of species_code -> rule dict (for common names)
         observer_weight: Weight for observer-based expectation (alpha, default 0.7)
         habitat_weight: Weight for habitat-based expectation (beta, default 0.3)
 
@@ -491,6 +505,7 @@ def calculate_scores_from_cache(
         adjacent_data,
         exclusions,
         habitat_scores=habitat_scores,
+        habitat_rules=habitat_rules,
         observer_weight=observer_weight,
         habitat_weight=habitat_weight,
     )
