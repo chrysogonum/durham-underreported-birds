@@ -19,6 +19,12 @@
     "weight": 0.6,
     "notes": "Great Horned Owl - wide habitat tolerance"
   },
+  "nswowl": {
+    "habitats": ["mixed_forest", "mature_forest"],
+    "seasonality": ["winter"],
+    "weight": 0.5,
+    "notes": "Northern Saw-whet Owl - rare winter visitor, dense conifers, very secretive"
+  },
 
   "amewoo": {
     "habitats": ["riparian", "mixed_forest", "wetland"],
