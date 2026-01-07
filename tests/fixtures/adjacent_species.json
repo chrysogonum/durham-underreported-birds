@@ -1,0 +1,108 @@
+{
+  "regions": [
+    {
+      "region_code": "US-NC-135",
+      "name": "Orange County",
+      "checklists_total": 4000,
+      "species": [
+        {"species_code": "carwre", "common_name": "Carolina Wren", "observation_count": 3600},
+        {"species_code": "norcar", "common_name": "Northern Cardinal", "observation_count": 3800},
+        {"species_code": "blujay", "common_name": "Blue Jay", "observation_count": 3400},
+        {"species_code": "tuftit", "common_name": "Tufted Titmouse", "observation_count": 3200},
+        {"species_code": "carchi", "common_name": "Carolina Chickadee", "observation_count": 3300},
+        {"species_code": "amerob", "common_name": "American Robin", "observation_count": 3000},
+        {"species_code": "mouchi", "common_name": "Mourning Dove", "observation_count": 2900},
+        {"species_code": "reshaw", "common_name": "Red-shouldered Hawk", "observation_count": 1000},
+        {"species_code": "woothr", "common_name": "Wood Thrush", "observation_count": 1400},
+        {"species_code": "kenwar", "common_name": "Kentucky Warbler", "observation_count": 650},
+        {"species_code": "worwar", "common_name": "Worm-eating Warbler", "observation_count": 580},
+        {"species_code": "lotduc", "common_name": "Long-tailed Duck", "observation_count": 12},
+        {"species_code": "comloo", "common_name": "Common Loon", "observation_count": 35},
+        {"species_code": "amewoo", "common_name": "American Woodcock", "observation_count": 420}
+      ]
+    },
+    {
+      "region_code": "US-NC-183",
+      "name": "Wake County",
+      "checklists_total": 12000,
+      "species": [
+        {"species_code": "carwre", "common_name": "Carolina Wren", "observation_count": 10800},
+        {"species_code": "norcar", "common_name": "Northern Cardinal", "observation_count": 11400},
+        {"species_code": "blujay", "common_name": "Blue Jay", "observation_count": 10200},
+        {"species_code": "tuftit", "common_name": "Tufted Titmouse", "observation_count": 9600},
+        {"species_code": "carchi", "common_name": "Carolina Chickadee", "observation_count": 9900},
+        {"species_code": "amerob", "common_name": "American Robin", "observation_count": 9000},
+        {"species_code": "mouchi", "common_name": "Mourning Dove", "observation_count": 8700},
+        {"species_code": "reshaw", "common_name": "Red-shouldered Hawk", "observation_count": 3000},
+        {"species_code": "woothr", "common_name": "Wood Thrush", "observation_count": 3600},
+        {"species_code": "kenwar", "common_name": "Kentucky Warbler", "observation_count": 1800},
+        {"species_code": "worwar", "common_name": "Worm-eating Warbler", "observation_count": 1550},
+        {"species_code": "lotduc", "common_name": "Long-tailed Duck", "observation_count": 40},
+        {"species_code": "comloo", "common_name": "Common Loon", "observation_count": 120},
+        {"species_code": "amewoo", "common_name": "American Woodcock", "observation_count": 1100},
+        {"species_code": "bkbwar", "common_name": "Black-and-white Warbler", "observation_count": 2400}
+      ]
+    },
+    {
+      "region_code": "US-NC-037",
+      "name": "Chatham County",
+      "checklists_total": 3500,
+      "species": [
+        {"species_code": "carwre", "common_name": "Carolina Wren", "observation_count": 3150},
+        {"species_code": "norcar", "common_name": "Northern Cardinal", "observation_count": 3325},
+        {"species_code": "blujay", "common_name": "Blue Jay", "observation_count": 2975},
+        {"species_code": "tuftit", "common_name": "Tufted Titmouse", "observation_count": 2800},
+        {"species_code": "carchi", "common_name": "Carolina Chickadee", "observation_count": 2870},
+        {"species_code": "amerob", "common_name": "American Robin", "observation_count": 2625},
+        {"species_code": "mouchi", "common_name": "Mourning Dove", "observation_count": 2520},
+        {"species_code": "reshaw", "common_name": "Red-shouldered Hawk", "observation_count": 875},
+        {"species_code": "woothr", "common_name": "Wood Thrush", "observation_count": 1200},
+        {"species_code": "kenwar", "common_name": "Kentucky Warbler", "observation_count": 560},
+        {"species_code": "worwar", "common_name": "Worm-eating Warbler", "observation_count": 490},
+        {"species_code": "lotduc", "common_name": "Long-tailed Duck", "observation_count": 8},
+        {"species_code": "comloo", "common_name": "Common Loon", "observation_count": 25},
+        {"species_code": "amewoo", "common_name": "American Woodcock", "observation_count": 380}
+      ]
+    },
+    {
+      "region_code": "US-NC-077",
+      "name": "Granville County",
+      "checklists_total": 1500,
+      "species": [
+        {"species_code": "carwre", "common_name": "Carolina Wren", "observation_count": 1350},
+        {"species_code": "norcar", "common_name": "Northern Cardinal", "observation_count": 1425},
+        {"species_code": "blujay", "common_name": "Blue Jay", "observation_count": 1275},
+        {"species_code": "tuftit", "common_name": "Tufted Titmouse", "observation_count": 1200},
+        {"species_code": "carchi", "common_name": "Carolina Chickadee", "observation_count": 1230},
+        {"species_code": "amerob", "common_name": "American Robin", "observation_count": 1125},
+        {"species_code": "mouchi", "common_name": "Mourning Dove", "observation_count": 1080},
+        {"species_code": "reshaw", "common_name": "Red-shouldered Hawk", "observation_count": 375},
+        {"species_code": "woothr", "common_name": "Wood Thrush", "observation_count": 500},
+        {"species_code": "kenwar", "common_name": "Kentucky Warbler", "observation_count": 240},
+        {"species_code": "worwar", "common_name": "Worm-eating Warbler", "observation_count": 210},
+        {"species_code": "comloo", "common_name": "Common Loon", "observation_count": 10},
+        {"species_code": "amewoo", "common_name": "American Woodcock", "observation_count": 160}
+      ]
+    },
+    {
+      "region_code": "US-NC-145",
+      "name": "Person County",
+      "checklists_total": 1200,
+      "species": [
+        {"species_code": "carwre", "common_name": "Carolina Wren", "observation_count": 1080},
+        {"species_code": "norcar", "common_name": "Northern Cardinal", "observation_count": 1140},
+        {"species_code": "blujay", "common_name": "Blue Jay", "observation_count": 1020},
+        {"species_code": "tuftit", "common_name": "Tufted Titmouse", "observation_count": 960},
+        {"species_code": "carchi", "common_name": "Carolina Chickadee", "observation_count": 984},
+        {"species_code": "amerob", "common_name": "American Robin", "observation_count": 900},
+        {"species_code": "mouchi", "common_name": "Mourning Dove", "observation_count": 864},
+        {"species_code": "reshaw", "common_name": "Red-shouldered Hawk", "observation_count": 300},
+        {"species_code": "woothr", "common_name": "Wood Thrush", "observation_count": 400},
+        {"species_code": "kenwar", "common_name": "Kentucky Warbler", "observation_count": 190},
+        {"species_code": "worwar", "common_name": "Worm-eating Warbler", "observation_count": 168},
+        {"species_code": "comloo", "common_name": "Common Loon", "observation_count": 8},
+        {"species_code": "amewoo", "common_name": "American Woodcock", "observation_count": 130}
+      ]
+    }
+  ]
+}

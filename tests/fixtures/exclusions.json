@@ -1,0 +1,7 @@
+{
+  "excluded_species": [
+    {"species_code": "lotduc", "reason": "pelagic", "common_name": "Long-tailed Duck"},
+    {"species_code": "bkcchi", "reason": "vagrant", "common_name": "Black-capped Chickadee"}
+  ],
+  "exclusion_categories": ["pelagic", "vagrant", "exotic", "flyover"]
+}

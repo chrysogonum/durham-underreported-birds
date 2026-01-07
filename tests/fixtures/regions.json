@@ -1,0 +1,14 @@
+{
+  "target_region": {
+    "code": "US-NC-063",
+    "name": "Durham County",
+    "state": "NC"
+  },
+  "adjacent_regions": [
+    {"code": "US-NC-135", "name": "Orange County", "state": "NC"},
+    {"code": "US-NC-183", "name": "Wake County", "state": "NC"},
+    {"code": "US-NC-037", "name": "Chatham County", "state": "NC"},
+    {"code": "US-NC-077", "name": "Granville County", "state": "NC"},
+    {"code": "US-NC-145", "name": "Person County", "state": "NC"}
+  ]
+}

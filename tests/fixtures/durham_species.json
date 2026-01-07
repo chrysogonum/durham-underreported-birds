@@ -1,0 +1,21 @@
+{
+  "region_code": "US-NC-063",
+  "checklists_total": 5000,
+  "species": [
+    {"species_code": "carwre", "common_name": "Carolina Wren", "observation_count": 4500},
+    {"species_code": "norcar", "common_name": "Northern Cardinal", "observation_count": 4800},
+    {"species_code": "blujay", "common_name": "Blue Jay", "observation_count": 4200},
+    {"species_code": "tuftit", "common_name": "Tufted Titmouse", "observation_count": 4000},
+    {"species_code": "carchi", "common_name": "Carolina Chickadee", "observation_count": 4100},
+    {"species_code": "amerob", "common_name": "American Robin", "observation_count": 3800},
+    {"species_code": "mouchi", "common_name": "Mourning Dove", "observation_count": 3600},
+    {"species_code": "reshaw", "common_name": "Red-shouldered Hawk", "observation_count": 1200},
+    {"species_code": "bkcchi", "common_name": "Black-capped Chickadee", "observation_count": 50},
+    {"species_code": "woothr", "common_name": "Wood Thrush", "observation_count": 800},
+    {"species_code": "kenwar", "common_name": "Kentucky Warbler", "observation_count": 120},
+    {"species_code": "worwar", "common_name": "Worm-eating Warbler", "observation_count": 95},
+    {"species_code": "lotduc", "common_name": "Long-tailed Duck", "observation_count": 15},
+    {"species_code": "comloo", "common_name": "Common Loon", "observation_count": 45},
+    {"species_code": "amewoo", "common_name": "American Woodcock", "observation_count": 180}
+  ]
+}

@@ -1,0 +1,35 @@
+cat > .gitignore <<'EOF'
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Test / tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Editor
+.vscode/
+
+# Project outputs / scratch (customize to your repo)
+outputs/
+tmp/
+cache/
+*.log
+
+# Large/raw data (customize if you have these)
+data/
+downloads/
+EOF
