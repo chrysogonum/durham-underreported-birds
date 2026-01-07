@@ -9,6 +9,7 @@ from pathlib import Path
 
 from bird_targets.export import export_all
 from bird_targets.scoring import calculate_underreported_scores
+from bird_targets.server import run_server
 
 
 def cmd_demo(args: argparse.Namespace) -> int:
@@ -75,6 +76,29 @@ def cmd_export(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_serve(args: argparse.Namespace) -> int:
+    """Run the map server."""
+    out_path = Path(args.out)
+    layers_path = out_path / "layers"
+    port = args.port
+
+    # Validate layers path
+    if not layers_path.exists():
+        print(f"Error: Layers path does not exist: {layers_path}", file=sys.stderr)
+        print("Run 'bird_targets export' first to generate layers.", file=sys.stderr)
+        return 1
+
+    # Start server
+    server = run_server(layers_path, port=port)
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("\nShutting down server...")
+        server.shutdown()
+
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     """Main entry point for the CLI."""
     parser = argparse.ArgumentParser(
@@ -123,6 +147,29 @@ def main(argv: list[str] | None = None) -> int:
         help="Output directory for results",
     )
     export_parser.set_defaults(func=cmd_export)
+
+    # Serve subcommand
+    serve_parser = subparsers.add_parser(
+        "serve",
+        help="Start local map server",
+    )
+    serve_parser.add_argument(
+        "--fixtures",
+        required=True,
+        help="Path to fixtures directory (unused but required for consistency)",
+    )
+    serve_parser.add_argument(
+        "--out",
+        required=True,
+        help="Output directory containing layers",
+    )
+    serve_parser.add_argument(
+        "--port",
+        type=int,
+        default=8000,
+        help="Port to listen on (default: 8000)",
+    )
+    serve_parser.set_defaults(func=cmd_serve)
 
     args = parser.parse_args(argv)
 

@@ -16,6 +16,7 @@ test:
 
 smoke:
 	python -m bird_targets --help
+	python -m bird_targets serve --help
 
 integration:
 	python -m bird_targets demo --fixtures tests/fixtures --out outputs/_demo
