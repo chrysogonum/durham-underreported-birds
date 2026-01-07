@@ -7,7 +7,8 @@
         "name": "Duke Forest",
         "type": "university_forest",
         "access": "public",
-        "area_acres": 7000
+        "area_acres": 7000,
+        "habitats": ["mature_forest", "mixed_forest", "riparian", "open_fields"]
       },
       "geometry": {
         "type": "Polygon",
@@ -26,7 +27,8 @@
         "name": "Eno River State Park",
         "type": "state_park",
         "access": "public",
-        "area_acres": 4200
+        "area_acres": 4200,
+        "habitats": ["mature_forest", "mixed_forest", "riparian"]
       },
       "geometry": {
         "type": "Polygon",
@@ -45,7 +47,8 @@
         "name": "Falls Lake State Recreation Area",
         "type": "state_recreation_area",
         "access": "public",
-        "area_acres": 12000
+        "area_acres": 12000,
+        "habitats": ["lake_wetland", "riparian", "mixed_forest", "open_fields"]
       },
       "geometry": {
         "type": "Polygon",
@@ -64,7 +67,8 @@
         "name": "Little River Regional Park",
         "type": "regional_park",
         "access": "public",
-        "area_acres": 391
+        "area_acres": 391,
+        "habitats": ["mixed_forest", "riparian", "suburban_edge", "open_fields"]
       },
       "geometry": {
         "type": "Polygon",

@@ -3,10 +3,14 @@
 from pathlib import Path
 
 from bird_targets.scoring import (
+    MIN_ADJACENT_COUNTIES,
+    MIN_TOTAL_OBSERVATIONS,
     SpeciesScore,
     calculate_expected_score,
     calculate_observed_score,
+    calculate_scores_from_data,
     calculate_underreported_scores,
+    get_plausible_species,
     load_fixtures,
 )
 
@@ -148,3 +152,247 @@ class TestCalculateUnderreportedScores:
             assert score.expected_score >= 0
             assert score.observed_score >= 0
             assert score.underreported_score >= 0
+
+
+class TestPlausibilityFilter:
+    """Tests for the regional plausibility filter."""
+
+    def test_species_in_many_counties_passes(self) -> None:
+        """Species in >= 3 adjacent counties should pass the filter."""
+        adjacent_data = {
+            "regions": [
+                {
+                    "region_code": "R1",
+                    "species": [
+                        {
+                            "species_code": "common1",
+                            "common_name": "Common Bird",
+                            "observation_count": 10,
+                        },
+                    ],
+                },
+                {
+                    "region_code": "R2",
+                    "species": [
+                        {
+                            "species_code": "common1",
+                            "common_name": "Common Bird",
+                            "observation_count": 10,
+                        },
+                    ],
+                },
+                {
+                    "region_code": "R3",
+                    "species": [
+                        {
+                            "species_code": "common1",
+                            "common_name": "Common Bird",
+                            "observation_count": 10,
+                        },
+                    ],
+                },
+            ]
+        }
+
+        plausible = get_plausible_species(adjacent_data)
+
+        assert "common1" in plausible
+
+    def test_species_in_few_counties_with_high_count_passes(self) -> None:
+        """Species in < 3 counties but with >= 25 total obs should pass."""
+        adjacent_data = {
+            "regions": [
+                {
+                    "region_code": "R1",
+                    "species": [
+                        {
+                            "species_code": "highobs",
+                            "common_name": "High Obs Bird",
+                            "observation_count": 30,
+                        },
+                    ],
+                },
+            ]
+        }
+
+        plausible = get_plausible_species(adjacent_data)
+
+        assert "highobs" in plausible
+
+    def test_vagrant_species_filtered_out(self) -> None:
+        """Species in < 3 counties with < 25 total obs should be filtered."""
+        adjacent_data = {
+            "regions": [
+                {
+                    "region_code": "R1",
+                    "species": [
+                        {
+                            "species_code": "vagrant1",
+                            "common_name": "Vagrant Bird",
+                            "observation_count": 5,
+                        },
+                    ],
+                },
+                {
+                    "region_code": "R2",
+                    "species": [
+                        {
+                            "species_code": "vagrant1",
+                            "common_name": "Vagrant Bird",
+                            "observation_count": 3,
+                        },
+                    ],
+                },
+            ]
+        }
+
+        plausible = get_plausible_species(adjacent_data)
+
+        # Only in 2 counties with 8 total obs - should be filtered
+        assert "vagrant1" not in plausible
+
+    def test_filter_thresholds_are_correct(self) -> None:
+        """Verify the filter thresholds match the expected values."""
+        assert MIN_ADJACENT_COUNTIES == 3
+        assert MIN_TOTAL_OBSERVATIONS == 25
+
+    def test_plausibility_filter_with_fixture_data(self) -> None:
+        """Test plausibility filter with fixture data."""
+        _, _, adjacent_data, _ = load_fixtures(FIXTURES_PATH)
+
+        plausible = get_plausible_species(adjacent_data)
+
+        # Common species (in all 5 counties) should pass
+        assert "carwre" in plausible
+        assert "norcar" in plausible
+
+        # Species in fewer counties but with enough obs should pass
+        # bkbwar is only in Wake but has 2400 obs >= 25
+        assert "bkbwar" in plausible
+
+
+class TestPlausibilityFilterIntegration:
+    """Integration tests for plausibility filter in scoring."""
+
+    def test_implausible_species_excluded_from_scores(self) -> None:
+        """Implausible species should not appear in scoring results."""
+        # Create mock data with a vagrant species
+        durham_data = {
+            "checklists_total": 100,
+            "species": [
+                {
+                    "species_code": "common1",
+                    "common_name": "Common Bird",
+                    "observation_count": 90,
+                },
+            ],
+        }
+        adjacent_data = {
+            "regions": [
+                {
+                    "region_code": "R1",
+                    "checklists_total": 100,
+                    "species": [
+                        {
+                            "species_code": "common1",
+                            "common_name": "Common Bird",
+                            "observation_count": 90,
+                        },
+                        {
+                            "species_code": "vagrant1",
+                            "common_name": "Vagrant Bird",
+                            "observation_count": 3,
+                        },
+                    ],
+                },
+                {
+                    "region_code": "R2",
+                    "checklists_total": 100,
+                    "species": [
+                        {
+                            "species_code": "common1",
+                            "common_name": "Common Bird",
+                            "observation_count": 85,
+                        },
+                    ],
+                },
+                {
+                    "region_code": "R3",
+                    "checklists_total": 100,
+                    "species": [
+                        {
+                            "species_code": "common1",
+                            "common_name": "Common Bird",
+                            "observation_count": 88,
+                        },
+                    ],
+                },
+            ]
+        }
+        exclusions = {"excluded_species": []}
+
+        scores = calculate_scores_from_data(
+            durham_data, adjacent_data, exclusions, apply_plausibility_filter=True
+        )
+
+        species_codes = {s.species_code for s in scores}
+
+        # common1 should be included (in 3 counties)
+        assert "common1" in species_codes
+        # vagrant1 should be excluded (only in 1 county, 3 obs)
+        assert "vagrant1" not in species_codes
+
+    def test_plausibility_filter_can_be_disabled(self) -> None:
+        """Plausibility filter should be disabled when flag is False."""
+        durham_data = {"checklists_total": 100, "species": []}
+        adjacent_data = {
+            "regions": [
+                {
+                    "region_code": "R1",
+                    "checklists_total": 100,
+                    "species": [
+                        {
+                            "species_code": "vagrant1",
+                            "common_name": "Vagrant Bird",
+                            "observation_count": 3,
+                        },
+                    ],
+                },
+            ]
+        }
+        exclusions = {"excluded_species": []}
+
+        # With filter disabled
+        scores = calculate_scores_from_data(
+            durham_data, adjacent_data, exclusions, apply_plausibility_filter=False
+        )
+
+        species_codes = {s.species_code for s in scores}
+        assert "vagrant1" in species_codes
+
+    def test_durham_species_always_included(self) -> None:
+        """Species observed in Durham should always be included."""
+        durham_data = {
+            "checklists_total": 100,
+            "species": [
+                {
+                    "species_code": "local1",
+                    "common_name": "Local Bird",
+                    "observation_count": 5,
+                },
+            ],
+        }
+        adjacent_data = {
+            "regions": [
+                {"region_code": "R1", "checklists_total": 100, "species": []},
+            ]
+        }
+        exclusions = {"excluded_species": []}
+
+        scores = calculate_scores_from_data(
+            durham_data, adjacent_data, exclusions, apply_plausibility_filter=True
+        )
+
+        species_codes = {s.species_code for s in scores}
+        # local1 is only in Durham, not adjacent - but should still be included
+        assert "local1" in species_codes

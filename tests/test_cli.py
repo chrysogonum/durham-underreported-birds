@@ -57,6 +57,8 @@ class TestDemoCommand:
             expected_columns = [
                 "species_code",
                 "common_name",
+                "observer_expected_score",
+                "habitat_expected_score",
                 "expected_score",
                 "observed_score",
                 "underreported_score",

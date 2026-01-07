@@ -1,4 +1,3 @@
-cat > .gitignore <<'EOF'
 # macOS
 .DS_Store
 
@@ -29,7 +28,6 @@ tmp/
 cache/
 *.log
 
-# Large/raw data (customize if you have these)
-data/
+# Large/raw data caches (not config files)
+data/ebird_cache/
 downloads/
-EOF

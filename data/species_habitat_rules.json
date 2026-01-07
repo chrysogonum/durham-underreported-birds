@@ -1,0 +1,206 @@
+{
+  "_comment": "Species habitat rules for Durham County, NC. Weight indicates confidence in habitat-based prediction (0-1).",
+
+  "brdowl": {
+    "habitats": ["mature_forest", "riparian", "mixed_forest"],
+    "seasonality": ["all_year"],
+    "weight": 0.8,
+    "notes": "Barred Owl - requires mature forest with large trees"
+  },
+  "easowl1": {
+    "habitats": ["mixed_forest", "suburban_edge", "riparian"],
+    "seasonality": ["all_year"],
+    "weight": 0.7,
+    "notes": "Eastern Screech-Owl - adaptable, uses cavities"
+  },
+  "grhowl": {
+    "habitats": ["mature_forest", "mixed_forest", "open_fields"],
+    "seasonality": ["all_year"],
+    "weight": 0.6,
+    "notes": "Great Horned Owl - wide habitat tolerance"
+  },
+
+  "amewoo": {
+    "habitats": ["riparian", "mixed_forest", "wetland"],
+    "seasonality": ["winter", "migration"],
+    "weight": 0.7,
+    "notes": "American Woodcock - damp woodlands, forest edges"
+  },
+  "norbob": {
+    "habitats": ["open_fields", "suburban_edge", "mixed_forest"],
+    "seasonality": ["all_year"],
+    "weight": 0.6,
+    "notes": "Northern Bobwhite - declining, needs brushy edges"
+  },
+  "wiltur": {
+    "habitats": ["mature_forest", "mixed_forest", "open_fields"],
+    "seasonality": ["all_year"],
+    "weight": 0.7,
+    "notes": "Wild Turkey - forest/field mosaic"
+  },
+
+  "virrai": {
+    "habitats": ["wetland", "riparian"],
+    "seasonality": ["breeding", "migration"],
+    "weight": 0.5,
+    "notes": "Virginia Rail - marshes, difficult to detect"
+  },
+  "sora": {
+    "habitats": ["wetland", "riparian"],
+    "seasonality": ["migration"],
+    "weight": 0.4,
+    "notes": "Sora - marshes, secretive"
+  },
+
+  "logshr": {
+    "habitats": ["open_fields", "suburban_edge"],
+    "seasonality": ["all_year"],
+    "weight": 0.5,
+    "notes": "Loggerhead Shrike - declining, open country with perches"
+  },
+
+  "kenwar": {
+    "habitats": ["mature_forest", "riparian"],
+    "seasonality": ["breeding"],
+    "weight": 0.7,
+    "notes": "Kentucky Warbler - dense understory in moist forest"
+  },
+  "worwar": {
+    "habitats": ["mature_forest"],
+    "seasonality": ["breeding"],
+    "weight": 0.7,
+    "notes": "Worm-eating Warbler - forested slopes"
+  },
+  "woothr": {
+    "habitats": ["mature_forest", "riparian", "mixed_forest"],
+    "seasonality": ["breeding"],
+    "weight": 0.8,
+    "notes": "Wood Thrush - interior forest, declining"
+  },
+  "ovenbi1": {
+    "habitats": ["mature_forest"],
+    "seasonality": ["breeding"],
+    "weight": 0.7,
+    "notes": "Ovenbird - forest floor"
+  },
+  "bkbwar": {
+    "habitats": ["mature_forest", "mixed_forest"],
+    "seasonality": ["migration"],
+    "weight": 0.6,
+    "notes": "Black-and-white Warbler - bark forager"
+  },
+  "btnwar": {
+    "habitats": ["mature_forest", "mixed_forest"],
+    "seasonality": ["migration"],
+    "weight": 0.5,
+    "notes": "Black-throated Green Warbler - migration"
+  },
+  "prawar": {
+    "habitats": ["open_fields", "suburban_edge"],
+    "seasonality": ["breeding"],
+    "weight": 0.5,
+    "notes": "Prairie Warbler - shrubby areas"
+  },
+  "hoowar": {
+    "habitats": ["mature_forest", "riparian"],
+    "seasonality": ["breeding"],
+    "weight": 0.6,
+    "notes": "Hooded Warbler - forest understory"
+  },
+  "louwat": {
+    "habitats": ["riparian", "wetland"],
+    "seasonality": ["breeding"],
+    "weight": 0.6,
+    "notes": "Louisiana Waterthrush - rocky streams"
+  },
+  "prowar": {
+    "habitats": ["mature_forest", "mixed_forest"],
+    "seasonality": ["breeding"],
+    "weight": 0.5,
+    "notes": "Prothonotary Warbler - wooded swamps"
+  },
+
+  "pilwoo": {
+    "habitats": ["mature_forest"],
+    "seasonality": ["all_year"],
+    "weight": 0.8,
+    "notes": "Pileated Woodpecker - large forest tracts"
+  },
+  "rehwoo": {
+    "habitats": ["mature_forest", "open_fields"],
+    "seasonality": ["all_year"],
+    "weight": 0.5,
+    "notes": "Red-headed Woodpecker - declining, needs dead trees"
+  },
+  "haiwoo": {
+    "habitats": ["mature_forest", "mixed_forest"],
+    "seasonality": ["all_year"],
+    "weight": 0.6,
+    "notes": "Hairy Woodpecker - mature forest"
+  },
+
+  "brnthr": {
+    "habitats": ["suburban_edge", "open_fields", "mixed_forest"],
+    "seasonality": ["breeding"],
+    "weight": 0.6,
+    "notes": "Brown Thrasher - dense shrubs"
+  },
+  "grycat": {
+    "habitats": ["suburban_edge", "riparian", "mixed_forest"],
+    "seasonality": ["breeding"],
+    "weight": 0.7,
+    "notes": "Gray Catbird - thickets"
+  },
+
+  "reshaw": {
+    "habitats": ["mature_forest", "mixed_forest", "riparian"],
+    "seasonality": ["all_year"],
+    "weight": 0.8,
+    "notes": "Red-shouldered Hawk - wooded areas near water"
+  },
+  "coohaw": {
+    "habitats": ["mature_forest", "mixed_forest", "suburban_edge"],
+    "seasonality": ["all_year"],
+    "weight": 0.7,
+    "notes": "Cooper's Hawk - forest and suburban"
+  },
+
+  "sumtan": {
+    "habitats": ["mature_forest", "mixed_forest"],
+    "seasonality": ["breeding"],
+    "weight": 0.7,
+    "notes": "Summer Tanager - forest canopy"
+  },
+  "scatan": {
+    "habitats": ["mature_forest"],
+    "seasonality": ["breeding"],
+    "weight": 0.7,
+    "notes": "Scarlet Tanager - mature deciduous forest"
+  },
+
+  "bewwre": {
+    "habitats": ["suburban_edge", "open_fields"],
+    "seasonality": ["all_year"],
+    "weight": 0.4,
+    "notes": "Bewick's Wren - rare/extirpated in east"
+  },
+  "sedwre1": {
+    "habitats": ["wetland", "open_fields"],
+    "seasonality": ["winter", "migration"],
+    "weight": 0.4,
+    "notes": "Sedge Wren - wet meadows, secretive"
+  },
+
+  "yelwar": {
+    "habitats": ["riparian", "wetland", "suburban_edge"],
+    "seasonality": ["breeding"],
+    "weight": 0.6,
+    "notes": "Yellow Warbler - shrubby wetlands"
+  },
+  "comyel": {
+    "habitats": ["wetland", "riparian", "open_fields"],
+    "seasonality": ["breeding"],
+    "weight": 0.7,
+    "notes": "Common Yellowthroat - marshes, thickets"
+  }
+}
