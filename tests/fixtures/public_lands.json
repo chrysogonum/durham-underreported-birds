@@ -1,0 +1,81 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Duke Forest",
+        "type": "university_forest",
+        "access": "public",
+        "area_acres": 7000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-79.05, 36.02],
+          [-79.00, 36.02],
+          [-79.00, 35.98],
+          [-79.05, 35.98],
+          [-79.05, 36.02]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eno River State Park",
+        "type": "state_park",
+        "access": "public",
+        "area_acres": 4200
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-79.10, 36.08],
+          [-79.02, 36.08],
+          [-79.02, 36.04],
+          [-79.10, 36.04],
+          [-79.10, 36.08]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Falls Lake State Recreation Area",
+        "type": "state_recreation_area",
+        "access": "public",
+        "area_acres": 12000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-78.85, 36.05],
+          [-78.75, 36.05],
+          [-78.75, 35.95],
+          [-78.85, 35.95],
+          [-78.85, 36.05]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Little River Regional Park",
+        "type": "regional_park",
+        "access": "public",
+        "area_acres": 391
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-79.15, 36.10],
+          [-79.12, 36.10],
+          [-79.12, 36.07],
+          [-79.15, 36.07],
+          [-79.15, 36.10]
+        ]]
+      }
+    }
+  ]
+}

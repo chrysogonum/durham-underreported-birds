@@ -1,0 +1,61 @@
+{
+  "region_code": "US-NC-063",
+  "hotspots": [
+    {
+      "loc_id": "L123456",
+      "name": "Duke Forest--Gate 12",
+      "lat": 36.00,
+      "lon": -79.02,
+      "checklist_count": 450
+    },
+    {
+      "loc_id": "L234567",
+      "name": "Eno River SP--Few's Ford",
+      "lat": 36.06,
+      "lon": -79.05,
+      "checklist_count": 820
+    },
+    {
+      "loc_id": "L345678",
+      "name": "Falls Lake SRA--Rolling View",
+      "lat": 36.00,
+      "lon": -78.80,
+      "checklist_count": 380
+    },
+    {
+      "loc_id": "L456789",
+      "name": "Sandy Creek Park",
+      "lat": 35.95,
+      "lon": -78.95,
+      "checklist_count": 1250
+    },
+    {
+      "loc_id": "L567890",
+      "name": "Little River Regional Park",
+      "lat": 36.085,
+      "lon": -79.135,
+      "checklist_count": 180
+    },
+    {
+      "loc_id": "L678901",
+      "name": "West Point on the Eno",
+      "lat": 36.07,
+      "lon": -78.92,
+      "checklist_count": 520
+    },
+    {
+      "loc_id": "L789012",
+      "name": "Jordan Lake--Ebenezer Church",
+      "lat": 35.78,
+      "lon": -79.05,
+      "checklist_count": 290
+    },
+    {
+      "loc_id": "L890123",
+      "name": "Durham--Third Fork Creek Trail",
+      "lat": 35.98,
+      "lon": -78.92,
+      "checklist_count": 145
+    }
+  ]
+}
