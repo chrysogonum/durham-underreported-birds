@@ -161,17 +161,32 @@ class TestFetchRegionData:
     """Tests for fetch_region_data function."""
 
     def test_fetch_with_mocked_client(self) -> None:
-        """Should fetch and process region data."""
+        """Should fetch and process region data using historical sampling."""
         mock_client = mock.MagicMock()
 
         # Mock stats response
         mock_client.get_region_stats.return_value = {"numChecklists": 1000}
 
-        # Mock observations response
-        mock_client.get_recent_observations.return_value = [
-            {"speciesCode": "carwre", "comName": "Carolina Wren", "sciName": ""},
-            {"speciesCode": "carwre", "comName": "Carolina Wren", "sciName": ""},
-            {"speciesCode": "norcar", "comName": "Northern Cardinal", "sciName": ""},
+        # Mock historic observations response (called for each sample date)
+        mock_client.get_historic_observations.return_value = [
+            {
+                "speciesCode": "carwre",
+                "comName": "Carolina Wren",
+                "sciName": "",
+                "subId": "S123",
+            },
+            {
+                "speciesCode": "carwre",
+                "comName": "Carolina Wren",
+                "sciName": "",
+                "subId": "S124",
+            },
+            {
+                "speciesCode": "norcar",
+                "comName": "Northern Cardinal",
+                "sciName": "",
+                "subId": "S123",
+            },
         ]
 
         total_cl, species = fetch_region_data(
@@ -181,6 +196,9 @@ class TestFetchRegionData:
         assert total_cl == 1000
         assert "carwre" in species
         assert "norcar" in species
+        # Should aggregate counts across sample dates
+        assert species["carwre"]["count"] > 0
+        assert species["norcar"]["count"] > 0
 
     def test_handles_api_errors_gracefully(self) -> None:
         """Should handle API errors without crashing."""
@@ -188,7 +206,7 @@ class TestFetchRegionData:
 
         mock_client = mock.MagicMock()
         mock_client.get_region_stats.side_effect = EBirdAPIError("API Error")
-        mock_client.get_recent_observations.return_value = []
+        mock_client.get_historic_observations.side_effect = EBirdAPIError("API Error")
 
         # Should not raise
         total_cl, species = fetch_region_data(

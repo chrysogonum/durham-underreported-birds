@@ -5,13 +5,18 @@ Fetches and caches eBird data for Durham County and adjacent regions.
 
 from __future__ import annotations
 
+import random
 import sqlite3
 from contextlib import contextmanager
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Iterator
 
 from bird_targets.ebird_client import EBirdAPIError, EBirdClient
+
+# Sampling configuration
+SAMPLES_PER_YEAR = 12  # Sample once per month on average
+MIN_SAMPLES_TOTAL = 24  # Minimum samples across all years
 
 # Durham County and its adjacent regions
 DURHAM_REGION = {
@@ -270,6 +275,43 @@ class EBirdDataCache:
         return durham_data, adjacent_data, regions_data
 
 
+def generate_sample_dates(
+    years: int, samples_per_year: int = SAMPLES_PER_YEAR
+) -> list[datetime]:
+    """Generate random sample dates across the specified time period.
+
+    Samples are distributed across months to capture seasonal variation.
+
+    Args:
+        years: Number of years to sample
+        samples_per_year: Number of samples per year
+
+    Returns:
+        List of datetime objects representing sample dates
+    """
+    end_date = datetime.now() - timedelta(days=1)  # Yesterday
+    start_date = end_date - timedelta(days=365 * years)
+
+    # Ensure we have enough samples
+    total_samples = max(MIN_SAMPLES_TOTAL, years * samples_per_year)
+
+    # Generate samples distributed by month to ensure seasonal coverage
+    samples = []
+    days_in_period = (end_date - start_date).days
+
+    # Sample evenly across the period with some randomization
+    interval = days_in_period / total_samples
+    for i in range(total_samples):
+        # Add some jitter to avoid always hitting the same day of month
+        base_offset = int(i * interval)
+        jitter = random.randint(0, max(1, int(interval * 0.5)))
+        offset = min(base_offset + jitter, days_in_period - 1)
+        sample_date = start_date + timedelta(days=offset)
+        samples.append(sample_date)
+
+    return sorted(samples)
+
+
 def fetch_region_data(
     client: EBirdClient,
     region_code: str,
@@ -277,6 +319,8 @@ def fetch_region_data(
     verbose: bool = True,
 ) -> tuple[int, dict[str, dict]]:
     """Fetch observation data for a region over multiple years.
+
+    Samples historical dates to build species frequency data.
 
     Args:
         client: eBird API client
@@ -290,44 +334,83 @@ def fetch_region_data(
     """
     species_data: dict[str, dict] = {}
     total_checklists = 0
+    checklists_sampled = 0
 
-    # Get overall stats (eBird API doesn't support year filtering on this endpoint)
+    # Try to get overall stats
     try:
         stats = client.get_region_stats(region_code)
         if "numChecklists" in stats:
             total_checklists = stats["numChecklists"]
         if verbose:
-            print(f"  {region_code}: {total_checklists} total checklists")
+            print(f"    Stats: {total_checklists} total checklists on record")
     except EBirdAPIError as e:
         if verbose:
-            print(f"  {region_code} stats: Error - {e}")
+            print(f"    Stats endpoint unavailable: {e}")
 
-    # Get recent observations to get species and their observation rates
-    try:
-        observations = client.get_recent_observations(region_code, back=30)
-        for obs in observations:
-            code = obs.get("speciesCode")
-            if not code:
-                continue
-            if code not in species_data:
-                species_data[code] = {
-                    "common_name": obs.get("comName", "Unknown"),
-                    "sci_name": obs.get("sciName", ""),
-                    "count": 0,
-                }
-            species_data[code]["count"] += 1
-    except EBirdAPIError as e:
+    # Generate sample dates across the time period
+    sample_dates = generate_sample_dates(years)
+    if verbose:
+        print(f"    Sampling {len(sample_dates)} historical dates...")
+
+    # Fetch observations for each sample date
+    successful_samples = 0
+    for i, sample_date in enumerate(sample_dates):
+        try:
+            observations = client.get_historic_observations(
+                region_code,
+                sample_date.year,
+                sample_date.month,
+                sample_date.day,
+            )
+
+            # Count unique checklists in this sample
+            checklist_ids = set()
+            for obs in observations:
+                code = obs.get("speciesCode")
+                if not code:
+                    continue
+
+                # Track checklists
+                sub_id = obs.get("subId")
+                if sub_id:
+                    checklist_ids.add(sub_id)
+
+                # Aggregate species counts
+                if code not in species_data:
+                    species_data[code] = {
+                        "common_name": obs.get("comName", "Unknown"),
+                        "sci_name": obs.get("sciName", ""),
+                        "count": 0,
+                    }
+                species_data[code]["count"] += 1
+
+            checklists_sampled += len(checklist_ids)
+            successful_samples += 1
+
+            # Progress indicator every 10 samples
+            if verbose and (i + 1) % 10 == 0:
+                print(f"      ... {i + 1}/{len(sample_dates)} dates sampled")
+
+        except EBirdAPIError as e:
+            # Some dates may have no data, that's ok
+            if verbose and "404" not in str(e):
+                print(f"      Date {sample_date.date()}: {e}")
+
+    if verbose:
+        print(
+            f"    Found {len(species_data)} species across "
+            f"{successful_samples} dates ({checklists_sampled} checklists)"
+        )
+
+    # If we couldn't get stats, estimate from samples
+    if total_checklists == 0 and checklists_sampled > 0:
+        # Rough extrapolation: if we sampled N dates and found M checklists,
+        # estimate total = M * (365 * years / N)
+        days_sampled = successful_samples
+        days_total = 365 * years
+        total_checklists = int(checklists_sampled * days_total / max(days_sampled, 1))
         if verbose:
-            print(f"  {region_code} recent: Error - {e}")
-
-    # Scale observation counts based on checklist estimate
-    # This is a rough approximation of reporting frequency
-    if species_data:
-        max_count = max(s["count"] for s in species_data.values())
-        if max_count > 0 and total_checklists > 0:
-            scale = total_checklists / max_count * 0.9
-            for sp in species_data.values():
-                sp["count"] = int(sp["count"] * scale)
+            print(f"    Estimated ~{total_checklists} total checklists")
 
     return total_checklists, species_data
 
