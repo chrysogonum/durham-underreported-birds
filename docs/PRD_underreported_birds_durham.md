@@ -230,3 +230,79 @@ with guardrails:
 - `outputs/species_dossiers/{species_code}.md`
 - `app/` interactive map (local)
 
+---
+
+## 12) Future Features
+
+### 12.1 Seasonal Target Filtering (Month Selector)
+
+**Status:** Planned
+**Priority:** Medium
+**Depends on:** Phase 2 seasonality curves, habitat rules
+
+#### Problem Statement
+
+The map UI includes a month dropdown filter, but it currently has no effect. Users cannot filter the target species list by season, making it harder to plan surveys for the current month.
+
+#### Desired Behavior
+
+When a user selects a month (e.g., "January"):
+1. The species list filters to show only species that are **good survey targets** for that month
+2. Species are considered targetable in a month if:
+   - Their `seasonality` indicates presence (e.g., "winter" species show in Dec/Jan/Feb)
+   - OR they are year-round residents
+3. The under-reported ranking is preserved within the filtered list
+
+#### Data Requirements
+
+**Input:** `seasonality` field in `data/species_habitat_rules.json`
+```json
+"nswowl": {
+  "seasonality": ["winter"],
+  ...
+}
+```
+
+**Output:** `best_months` column in `targets_ranked.csv`
+```csv
+species_code,common_name,...,best_months
+nswowl,Northern Saw-whet Owl,...,"[12,1,2]"
+```
+
+#### Seasonality → Month Mapping
+
+| Seasonality Tag | Months |
+|-----------------|--------|
+| `winter` | 12, 1, 2 |
+| `spring` | 3, 4, 5 |
+| `summer` | 6, 7, 8 |
+| `fall` | 9, 10, 11 |
+| `breeding` | 4, 5, 6, 7 |
+| `migration` | 3, 4, 5, 9, 10, 11 |
+| `year-round` | 1–12 (or empty = show always) |
+
+Species with no `seasonality` field default to year-round (always shown).
+
+#### Implementation Steps
+
+1. **scoring.py**: Add `best_months` field to `SpeciesScore` dataclass
+2. **habitat_model.py** or new module: Add `seasonality_to_months()` mapping function
+3. **__main__.py**: Populate `best_months` from habitat rules when writing CSV
+4. **write_scores_csv()**: Include `best_months` column as JSON array
+5. **server.py**: Already handles `best_months` in `load_targets()` — no changes needed
+6. **Frontend JS**: Already filters by `best_months` — no changes needed
+
+#### Acceptance Criteria
+
+- [ ] Selecting "January" shows only winter/year-round species
+- [ ] Selecting "June" shows only summer/breeding/year-round species
+- [ ] Selecting "All Months" shows all species (current behavior)
+- [ ] Species without seasonality data appear in all months
+- [ ] Dossiers display "Best Months" section when available
+
+#### Future Enhancements (v1+)
+
+- **eBird frequency data**: Replace/augment manual seasonality tags with actual eBird bar chart data showing when species are reported in the region
+- **Detection probability weighting**: Weight months by detection probability, not just presence
+- **Dynamic re-ranking**: Optionally re-rank species by "under-reported score for this month" based on monthly effort data
+
