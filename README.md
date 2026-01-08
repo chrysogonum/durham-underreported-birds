@@ -6,8 +6,9 @@ A data-driven tool for discovering under-reported bird species in Durham County,
 
 - **Under-reported species ranking** - Identifies birds that should occur in Durham based on regional patterns but have low local reporting rates
 - **Habitat-based scoring** - Augments observer data with habitat availability analysis on public lands
-- **Interactive map server** - Local Leaflet-based map with toggleable layers for public lands, checklist density, and survey targets
+- **Interactive map server** - Local Leaflet-based map with toggleable layers for public lands, checklist density, survey targets, and species spots
 - **Species dossiers** - Detailed markdown reports for top target species with scoring breakdown and survey recommendations
+- **Spot guides** - Trail-accessible birding locations with specific habitat requirements, parking/access info, timing, and detection tips
 - **eBird API integration** - Fetches real observation data from eBird with local SQLite caching
 - **Offline demo mode** - Run analyses using fixture data without API access
 
@@ -127,12 +128,25 @@ outputs/
 ├── layers/
 │   ├── public_lands.geojson    # Public land boundaries
 │   ├── checklist_density.geojson  # Hotspot checklist counts
-│   └── survey_targets.geojson  # Priority survey areas
-└── species_dossiers/
-    ├── woothr.md               # Wood Thrush dossier
-    ├── kenwar.md               # Kentucky Warbler dossier
-    └── ...
+│   ├── survey_targets.geojson  # Priority survey areas
+│   └── species_spots.geojson   # Trail-accessible birding spots
+├── species_dossiers/
+│   ├── woothr.md               # Wood Thrush dossier
+│   └── ...
+└── spot_guides/
+    ├── bkbwar.md               # Black-and-white Warbler spot guide
+    ├── woothr.md               # Wood Thrush spot guide
+    └── ...                     # Guides for species with spot data
 ```
+
+### Spot Guides
+
+Each spot guide includes:
+- **Why Under-Reported?** - Scoring breakdown showing observer rates, habitat availability, and the under-reporting gap
+- **What Habitat Exactly** - Specific habitat requirements
+- **Where to Look** - Top 3-10 trail-accessible locations with parking info
+- **When to Survey** - Best months and time of day
+- **How to Detect** - Calls, songs, and behavioral cues
 
 ### CSV Columns
 | Column | Description |
