@@ -1,0 +1,276 @@
+"""Spot finder module for generating species-specific spot guides and GeoJSON."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from bird_targets.scoring import SpeciesScore
+
+
+def load_species_spots(fixtures_path: Path) -> dict:
+    """Load species spot recommendations from fixtures."""
+    spots_file = fixtures_path / "species_spots.json"
+    if spots_file.exists():
+        with open(spots_file) as f:
+            return json.load(f)
+    return {}
+
+
+def load_osm_trails(fixtures_path: Path) -> dict:
+    """Load OpenStreetMap trail data from fixtures."""
+    trails_file = fixtures_path / "osm_trails.json"
+    if trails_file.exists():
+        with open(trails_file) as f:
+            return json.load(f)
+    return {"type": "FeatureCollection", "features": []}
+
+
+def load_habitat_rules(data_path: Path | None = None) -> dict:
+    """Load species habitat rules."""
+    if data_path is None:
+        data_path = Path(__file__).parent.parent / "data"
+    rules_file = data_path / "species_habitat_rules.json"
+    if rules_file.exists():
+        with open(rules_file) as f:
+            return json.load(f)
+    return {}
+
+
+def _get_trailhead_info(trailhead_name: str, trails_data: dict) -> dict | None:
+    """Find trailhead info from OSM data."""
+    for feature in trails_data.get("features", []):
+        if feature["properties"].get("type") == "trailhead":
+            if feature["properties"].get("name") == trailhead_name:
+                return {
+                    "name": feature["properties"]["name"],
+                    "parking": feature["properties"].get("parking", False),
+                    "parking_spaces": feature["properties"].get("parking_spaces", 0),
+                    "coordinates": feature["geometry"]["coordinates"],
+                }
+    return None
+
+
+def _seasonality_to_months(seasonality: list[str]) -> str:
+    """Convert seasonality tags to month descriptions."""
+    month_map = {
+        "all_year": "Year-round",
+        "breeding": "Apr-Jul",
+        "winter": "Nov-Feb",
+        "migration": "Mar-May, Sep-Nov",
+    }
+    seasons = []
+    for s in seasonality:
+        if s in month_map:
+            seasons.append(month_map[s])
+    return ", ".join(seasons) if seasons else "Year-round"
+
+
+def generate_spot_guide(
+    species_code: str,
+    common_name: str,
+    species_spots: dict,
+    habitat_rules: dict,
+    trails_data: dict,
+) -> str:
+    """Generate a spot guide markdown file for a species.
+
+    Returns markdown content with:
+    - What habitat exactly
+    - Where in Durham to try (top 3-10 named places)
+    - How to access (trailhead/parking/nearest trail segment)
+    - When (month + time-of-day)
+    - How to detect (calls, behavior)
+    """
+    spot_data = species_spots.get(species_code, {})
+    habitat_data = habitat_rules.get(species_code, {})
+
+    # Get habitat-specific info
+    habitat_specific = spot_data.get(
+        "habitat_specific",
+        habitat_data.get("notes", "No specific habitat information available."),
+    )
+
+    # Get seasonality
+    seasonality = habitat_data.get("seasonality", ["all_year"])
+    season_text = _seasonality_to_months(seasonality)
+
+    # Get time of day
+    time_of_day = spot_data.get("time_of_day", "morning")
+
+    # Get detection tips
+    detection_tips = spot_data.get(
+        "detection_tips", "Standard visual and auditory detection methods."
+    )
+
+    # Build spots section
+    spots = spot_data.get("spots", [])
+    spots_section = ""
+    if spots:
+        spots_section = "## Where to Look in Durham\n\n"
+        for i, spot in enumerate(spots, 1):
+            # Get trailhead info
+            trailhead_info = _get_trailhead_info(spot.get("trailhead", ""), trails_data)
+            access_text = f"**Access:** {spot.get('trailhead', 'Unknown')}"
+            if trailhead_info:
+                if trailhead_info.get("parking"):
+                    spaces = trailhead_info["parking_spaces"]
+                    access_text += f" (parking available, ~{spaces} spaces)"
+
+            confidence_pct = int(spot.get("confidence", 0.5) * 100)
+
+            spots_section += f"""### {i}. {spot["place_name"]}
+
+**Public Land:** {spot.get("public_land", "Unknown")}
+
+{access_text}
+
+**Why here:** {spot.get("why_here", "Suitable habitat present.")}
+
+**Confidence:** {confidence_pct}%
+
+---
+
+"""
+    else:
+        spots_section = """## Where to Look in Durham
+
+No specific spot recommendations available for this species.
+Check public lands with suitable habitat.
+
+---
+
+"""
+
+    # Build full guide
+    content = f"""# {common_name} - Spot Guide
+
+## What Habitat Exactly
+
+{habitat_specific}
+
+{spots_section}
+## When to Survey
+
+**Best Months:** {season_text}
+
+**Time of Day:** {time_of_day.replace(", ", ", ").title()}
+
+## How to Detect
+
+{detection_tips}
+
+---
+*Generated by bird_targets - Durham Under-Reported Birds Project*
+"""
+    return content
+
+
+def generate_species_spots_geojson(
+    scores: list["SpeciesScore"],
+    species_spots: dict,
+    max_species: int = 20,
+) -> dict:
+    """Generate species_spots.geojson with trail-accessible spot points.
+
+    Returns a GeoJSON FeatureCollection with point features for suggested spots.
+    Properties: species_code, place_name, why_here, confidence
+    """
+    features = []
+
+    for score in scores[:max_species]:
+        if score.underreported_score <= 0:
+            continue
+
+        spot_data = species_spots.get(score.species_code, {})
+        spots = spot_data.get("spots", [])
+
+        for spot in spots:
+            coords = spot.get("coordinates")
+            if not coords:
+                continue
+
+            feature = {
+                "type": "Feature",
+                "properties": {
+                    "species_code": score.species_code,
+                    "common_name": score.common_name,
+                    "place_name": spot.get("place_name", "Unknown"),
+                    "public_land": spot.get("public_land", ""),
+                    "trailhead": spot.get("trailhead", ""),
+                    "why_here": spot.get("why_here", ""),
+                    "confidence": spot.get("confidence", 0.5),
+                    "underreported_score": score.underreported_score,
+                },
+                "geometry": {"type": "Point", "coordinates": coords},
+            }
+            features.append(feature)
+
+    # Sort by underreported score (highest first), then confidence
+    features.sort(
+        key=lambda f: (
+            -f["properties"]["underreported_score"],
+            -f["properties"]["confidence"],
+        )
+    )
+
+    return {"type": "FeatureCollection", "features": features}
+
+
+def export_spot_guides(
+    fixtures_path: Path,
+    out_path: Path,
+    scores: list["SpeciesScore"],
+    max_species: int = 10,
+) -> dict:
+    """Export spot guides and species_spots.geojson.
+
+    Args:
+        fixtures_path: Path to fixtures directory
+        out_path: Output directory
+        scores: List of SpeciesScore objects (sorted by underreported score)
+        max_species: Maximum number of species to generate guides for
+
+    Returns:
+        Summary dict with counts of exported files
+    """
+    # Load data
+    species_spots = load_species_spots(fixtures_path)
+    habitat_rules = load_habitat_rules()
+    trails_data = load_osm_trails(fixtures_path)
+
+    # Create output directories
+    guides_path = out_path / "spot_guides"
+    layers_path = out_path / "layers"
+    guides_path.mkdir(parents=True, exist_ok=True)
+    layers_path.mkdir(parents=True, exist_ok=True)
+
+    # Generate spot guides for top species
+    guides_exported = 0
+    for score in scores[:max_species]:
+        if score.underreported_score <= 0:
+            continue
+
+        guide_content = generate_spot_guide(
+            species_code=score.species_code,
+            common_name=score.common_name,
+            species_spots=species_spots,
+            habitat_rules=habitat_rules,
+            trails_data=trails_data,
+        )
+        guide_file = guides_path / f"{score.species_code}.md"
+        with open(guide_file, "w") as f:
+            f.write(guide_content)
+        guides_exported += 1
+
+    # Generate species_spots.geojson
+    spots_geojson = generate_species_spots_geojson(scores, species_spots, max_species)
+    with open(layers_path / "species_spots.geojson", "w") as f:
+        json.dump(spots_geojson, f, indent=2)
+
+    return {
+        "spot_guides_exported": guides_exported,
+        "species_spots_features": len(spots_geojson["features"]),
+    }

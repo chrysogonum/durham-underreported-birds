@@ -104,10 +104,11 @@ class TestAvailableLayers:
         assert "public_lands" in AVAILABLE_LAYERS
         assert "checklist_density" in AVAILABLE_LAYERS
         assert "survey_targets" in AVAILABLE_LAYERS
+        assert "species_spots" in AVAILABLE_LAYERS
 
-    def test_has_three_layers(self) -> None:
-        """Should have exactly three layers."""
-        assert len(AVAILABLE_LAYERS) == 3
+    def test_has_four_layers(self) -> None:
+        """Should have exactly four layers."""
+        assert len(AVAILABLE_LAYERS) == 4
 
 
 class TestIsPortAvailable:

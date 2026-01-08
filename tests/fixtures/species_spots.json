@@ -1,0 +1,225 @@
+{
+  "_comment": "Species-specific spot recommendations for Durham County birding",
+  "brdowl": {
+    "habitat_specific": "Mature bottomland hardwood forest with large trees (>12\" DBH), especially oaks and tulip poplars. Prefers areas near streams or swampy lowlands with dense understory.",
+    "time_of_day": "dusk, night, dawn",
+    "detection_tips": "Listen for distinctive 'who-cooks-for-you' call, especially Feb-Apr during breeding. Check for whitewash on tree trunks. Most vocal 30 min after sunset.",
+    "spots": [
+      {
+        "place_name": "Fews Ford - Eno River",
+        "public_land": "Eno River State Park",
+        "trailhead": "Fews Ford Access",
+        "why_here": "Mature riparian forest along Eno River with large oaks and quiet evening atmosphere",
+        "coordinates": [-79.045, 36.063],
+        "confidence": 0.85
+      },
+      {
+        "place_name": "Duke Forest - Korstian Division",
+        "public_land": "Duke Forest",
+        "trailhead": "Korstian Division Parking",
+        "why_here": "Old-growth hardwoods with large tree cavities, minimal disturbance",
+        "coordinates": [-79.035, 36.000],
+        "confidence": 0.80
+      },
+      {
+        "place_name": "Pump Station - Eno River",
+        "public_land": "Eno River State Park",
+        "trailhead": "Pump Station Trailhead",
+        "why_here": "Dense bottomland forest with stream corridor, known nesting area",
+        "coordinates": [-79.065, 36.057],
+        "confidence": 0.75
+      }
+    ]
+  },
+  "easowl1": {
+    "habitat_specific": "Mixed deciduous and pine forest edges, especially areas with old woodpecker holes or natural cavities. Tolerates suburban parks with mature trees.",
+    "time_of_day": "night, dusk",
+    "detection_tips": "Listen for descending whinny call or monotone trill. Often responds to playback (use sparingly). Check tree cavities and nest boxes at dawn.",
+    "spots": [
+      {
+        "place_name": "Little River Regional Park",
+        "public_land": "Little River Regional Park",
+        "trailhead": "Little River Main Parking",
+        "why_here": "Forest edge habitat with mature trees and open areas, good cavity availability",
+        "coordinates": [-79.130, 36.083],
+        "confidence": 0.80
+      },
+      {
+        "place_name": "Duke Forest - Al Buehler Trail",
+        "public_land": "Duke Forest",
+        "trailhead": "Gate 25 Entrance",
+        "why_here": "Mixed pine-hardwood forest with numerous snags and cavities",
+        "coordinates": [-79.020, 36.008],
+        "confidence": 0.75
+      }
+    ]
+  },
+  "woothr": {
+    "habitat_specific": "Interior deciduous forest with dense understory and leaf litter. Prefers moist slopes with shrub layer, especially near streams. Needs >20 acres of contiguous forest.",
+    "time_of_day": "dawn, morning",
+    "detection_tips": "Listen for flute-like 'ee-oh-lay' song at dawn. Most vocal May-Jun. Forages on ground in leaf litter. Look for bird flipping leaves.",
+    "spots": [
+      {
+        "place_name": "Duke Forest - Concrete Bridge Road",
+        "public_land": "Duke Forest",
+        "trailhead": "Korstian Division Parking",
+        "why_here": "Large contiguous forest tract with stream corridors and dense understory",
+        "coordinates": [-79.033, 36.000],
+        "confidence": 0.85
+      },
+      {
+        "place_name": "Pump Station Trail - Eno River",
+        "public_land": "Eno River State Park",
+        "trailhead": "Pump Station Trailhead",
+        "why_here": "Mature forest interior with moist ravines and good understory",
+        "coordinates": [-79.062, 36.056],
+        "confidence": 0.80
+      },
+      {
+        "place_name": "Fews Ford Trail - Eno River",
+        "public_land": "Eno River State Park",
+        "trailhead": "Fews Ford Access",
+        "why_here": "Riparian forest with dense understory vegetation",
+        "coordinates": [-79.042, 36.061],
+        "confidence": 0.75
+      }
+    ]
+  },
+  "kenwar": {
+    "habitat_specific": "Moist ravines in mature deciduous forest with dense understory of spicebush, pawpaw, or similar shrubs. Needs thick ground-level vegetation.",
+    "time_of_day": "dawn, morning",
+    "detection_tips": "Listen for loud 'churry-churry-churry' song from understory. Skulks in dense vegetation. Most vocal May-Jun. Often sings from low perch.",
+    "spots": [
+      {
+        "place_name": "Fews Ford Ravines - Eno River",
+        "public_land": "Eno River State Park",
+        "trailhead": "Fews Ford Access",
+        "why_here": "Moist ravines with dense spicebush understory, classic Kentucky Warbler habitat",
+        "coordinates": [-79.043, 36.062],
+        "confidence": 0.80
+      },
+      {
+        "place_name": "Duke Forest Stream Bottoms",
+        "public_land": "Duke Forest",
+        "trailhead": "Gate 25 Entrance",
+        "why_here": "Low-lying areas along streams with thick understory growth",
+        "coordinates": [-79.022, 36.003],
+        "confidence": 0.70
+      }
+    ]
+  },
+  "pilwoo": {
+    "habitat_specific": "Large tracts of mature forest (>100 acres) with abundant standing dead trees and fallen logs. Requires large trees for foraging and nesting.",
+    "time_of_day": "morning, afternoon",
+    "detection_tips": "Listen for loud 'kuk-kuk-kuk' call or drumming on hollow trees. Look for large rectangular excavations in dead trees. Loud and conspicuous.",
+    "spots": [
+      {
+        "place_name": "Duke Forest Interior",
+        "public_land": "Duke Forest",
+        "trailhead": "Korstian Division Parking",
+        "why_here": "Largest contiguous forest in Durham with mature trees and snags",
+        "coordinates": [-79.030, 35.998],
+        "confidence": 0.90
+      },
+      {
+        "place_name": "Eno River - Pump Station Area",
+        "public_land": "Eno River State Park",
+        "trailhead": "Pump Station Trailhead",
+        "why_here": "Mature bottomland forest with many dead trees from past flooding",
+        "coordinates": [-79.067, 36.058],
+        "confidence": 0.85
+      }
+    ]
+  },
+  "virrai": {
+    "habitat_specific": "Freshwater marshes with emergent vegetation (cattails, bulrushes). Needs standing water with dense cover. Very secretive.",
+    "time_of_day": "dawn, dusk",
+    "detection_tips": "Listen for descending 'kid-ick, kid-ick' call. Rarely seen, responds to playback in breeding season. Best detected by call at dawn/dusk.",
+    "spots": [
+      {
+        "place_name": "Falls Lake Wetlands",
+        "public_land": "Falls Lake State Recreation Area",
+        "trailhead": "Beaverdam Parking",
+        "why_here": "Marsh edges with cattails and emergent vegetation",
+        "coordinates": [-78.785, 36.017],
+        "confidence": 0.65
+      }
+    ]
+  },
+  "louwat": {
+    "habitat_specific": "Rocky streams in forested ravines. Needs clear, fast-flowing water with exposed rocks and boulders. Highly site-faithful.",
+    "time_of_day": "morning",
+    "detection_tips": "Listen for loud, ringing song echoing off water. Often bobs tail while walking on rocks. Arrives early Mar, departs by Aug.",
+    "spots": [
+      {
+        "place_name": "Eno River Rocky Sections",
+        "public_land": "Eno River State Park",
+        "trailhead": "Fews Ford Access",
+        "why_here": "Rocky stream sections with clear flowing water and forested banks",
+        "coordinates": [-79.048, 36.064],
+        "confidence": 0.80
+      }
+    ]
+  },
+  "amewoo": {
+    "habitat_specific": "Moist forest edges and young forest with damp leaf litter. Uses fields for display flights at dusk. Probes soil for earthworms.",
+    "time_of_day": "dusk, night",
+    "detection_tips": "Listen for 'peent' call and twittering display flight at dusk Feb-Apr. Check damp areas after rain. Display flights occur over open fields adjacent to forest.",
+    "spots": [
+      {
+        "place_name": "Little River Meadows",
+        "public_land": "Little River Regional Park",
+        "trailhead": "Little River Main Parking",
+        "why_here": "Forest edge with adjacent open fields, perfect for display flights",
+        "coordinates": [-79.128, 36.082],
+        "confidence": 0.75
+      },
+      {
+        "place_name": "Falls Lake Fields",
+        "public_land": "Falls Lake State Recreation Area",
+        "trailhead": "Rolling View Access",
+        "why_here": "Open areas near moist forest edges",
+        "coordinates": [-78.810, 36.013],
+        "confidence": 0.70
+      }
+    ]
+  },
+  "nswowl": {
+    "habitat_specific": "Dense coniferous or mixed forest with thick understory. Winter visitor that roosts in dense cover, often near tree trunks.",
+    "time_of_day": "night, dusk",
+    "detection_tips": "Very secretive winter visitor. Listen for repeated 'toot' calls at night Nov-Feb. Check dense cedar groves and holly thickets for roosting birds.",
+    "spots": [
+      {
+        "place_name": "Duke Forest Evergreen Areas",
+        "public_land": "Duke Forest",
+        "trailhead": "Gate 25 Entrance",
+        "why_here": "Mixed forest with dense pine and cedar groves for roosting",
+        "coordinates": [-79.018, 36.006],
+        "confidence": 0.50
+      }
+    ]
+  },
+  "reshaw": {
+    "habitat_specific": "Mature forest near water - streams, swamps, or bottomlands. Nests in deciduous trees, hunts from perches along forest edges and clearings.",
+    "time_of_day": "morning, afternoon",
+    "detection_tips": "Listen for loud 'kee-aah' scream. Often soars over forest calling. Check exposed perches along forest edges. Active year-round.",
+    "spots": [
+      {
+        "place_name": "Eno River Bottomlands",
+        "public_land": "Eno River State Park",
+        "trailhead": "Fews Ford Access",
+        "why_here": "Forested bottomlands along river with hunting perches",
+        "coordinates": [-79.047, 36.062],
+        "confidence": 0.85
+      },
+      {
+        "place_name": "Falls Lake Shore",
+        "public_land": "Falls Lake State Recreation Area",
+        "trailhead": "Rolling View Access",
+        "why_here": "Forest edge along lake with open hunting areas",
+        "coordinates": [-78.802, 36.008],
+        "confidence": 0.80
+      }
+    ]
+  }
+}

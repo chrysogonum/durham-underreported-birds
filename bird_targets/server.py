@@ -11,7 +11,12 @@ from pathlib import Path
 from typing import Callable
 
 # Available layers
-AVAILABLE_LAYERS = ["public_lands", "checklist_density", "survey_targets"]
+AVAILABLE_LAYERS = [
+    "public_lands",
+    "checklist_density",
+    "survey_targets",
+    "species_spots",
+]
 
 # Month names for filter
 MONTHS = [
@@ -170,6 +175,7 @@ def get_index_html() -> str:
         .legend h4 { margin-bottom: 6px; font-size: 0.8rem; }
         .legend-item { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
         .legend-color { width: 14px; height: 14px; border-radius: 2px; }
+        .spot-marker { background: #2980b9; border-radius: 50%; }
         .highlight-layer {
             stroke: #9b59b6 !important;
             stroke-width: 4 !important;
@@ -192,6 +198,10 @@ def get_index_html() -> str:
             <div class="control-item">
                 <input type="checkbox" id="toggle-survey-targets" checked>
                 <label for="toggle-survey-targets">Survey Areas</label>
+            </div>
+            <div class="control-item">
+                <input type="checkbox" id="toggle-species-spots" checked>
+                <label for="toggle-species-spots">Species Spots</label>
             </div>
         </div>
     </div>
@@ -239,6 +249,10 @@ def get_index_html() -> str:
                     <div class="legend-color" style="background: #9b59b6;"></div>
                     <span>Selected Target</span>
                 </div>
+                <div class="legend-item">
+                    <div class="legend-color spot-marker"></div>
+                    <span>Species Spot</span>
+                </div>
             </div>
         </div>
         <div class="detail-panel">
@@ -255,6 +269,7 @@ def get_index_html() -> str:
         // State
         let allTargets = [];
         let surveyTargetsData = null;
+        let speciesSpotsData = null;
         let selectedBird = null;
         let highlightLayer = null;
         let map = null;
@@ -273,6 +288,7 @@ def get_index_html() -> str:
                     publicLands: L.layerGroup().addTo(map),
                     checklistDensity: L.layerGroup().addTo(map),
                     surveyTargets: L.layerGroup().addTo(map),
+                    speciesSpots: L.layerGroup().addTo(map),
                     highlight: L.layerGroup().addTo(map)
                 };
             }
@@ -314,6 +330,30 @@ def get_index_html() -> str:
             };
         }
 
+        function speciesSpotsStyle(feature) {
+            const conf = feature.properties.confidence || 0.5;
+            const radius = 6 + conf * 6;  // 6-12 based on confidence
+            return {
+                radius: radius,
+                fillColor: '#2980b9',
+                color: '#1a5276',
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.7
+            };
+        }
+
+        function selectedSpeciesSpotStyle(feature) {
+            return {
+                radius: 10,
+                fillColor: '#e74c3c',
+                color: '#c0392b',
+                weight: 3,
+                opacity: 1,
+                fillOpacity: 0.9
+            };
+        }
+
         // Load GeoJSON layer
         async function loadLayer(name, layerGroup, styleFunc, isPoint = false) {
             if (!map || !layerGroup) return;
@@ -321,14 +361,27 @@ def get_index_html() -> str:
                 const res = await fetch('/layers/' + name);
                 const geojson = await res.json();
                 if (name === 'survey_targets') surveyTargetsData = geojson;
+                if (name === 'species_spots') speciesSpotsData = geojson;
 
                 if (isPoint) {
                     L.geoJSON(geojson, {
                         pointToLayer: (f, ll) => L.circleMarker(ll, styleFunc(f)),
                         onEachFeature: (f, layer) => {
                             const p = f.properties;
-                            layer.bindPopup('<b>' + p.name + '</b><br>Checklists: ' +
-                                p.checklist_count + '<br>Density: ' + p.density_class);
+                            if (name === 'species_spots') {
+                                const conf = Math.round((p.confidence || 0.5) * 100);
+                                layer.bindPopup(
+                                    '<b>' + p.common_name + '</b><br>' +
+                                    '<strong>' + p.place_name + '</strong><br>' +
+                                    p.why_here + '<br>' +
+                                    '<em>Confidence: ' + conf + '%</em>'
+                                );
+                            } else {
+                                var txt = '<b>' + p.name + '</b><br>';
+                                txt += 'Checklists: ' + p.checklist_count;
+                                txt += '<br>Density: ' + p.density_class;
+                                layer.bindPopup(txt);
+                            }
                         }
                     }).addTo(layerGroup);
                 } else {
@@ -353,6 +406,7 @@ def get_index_html() -> str:
                 'checklist_density', layers.checklistDensity, densityPointStyle, true
             );
             loadLayer('survey_targets', layers.surveyTargets, surveyTargetsStyle);
+            loadLayer('species_spots', layers.speciesSpots, speciesSpotsStyle, true);
         }
 
         // Toggle handlers
@@ -371,6 +425,11 @@ def get_index_html() -> str:
             if (!map) return;
             if (e.target.checked) map.addLayer(layers.surveyTargets);
             else map.removeLayer(layers.surveyTargets);
+        });
+        $('toggle-species-spots').addEventListener('change', (e) => {
+            if (!map) return;
+            if (e.target.checked) map.addLayer(layers.speciesSpots);
+            else map.removeLayer(layers.speciesSpots);
         });
 
         // Load targets
@@ -417,7 +476,8 @@ def get_index_html() -> str:
             selectedBird = speciesCode;
             renderBirdList();
             highlightSurveyTargets();
-            loadDossier(speciesCode);
+            highlightSpeciesSpots(speciesCode);
+            loadSpotGuide(speciesCode);
         }
 
         // Event delegation for bird list clicks (more reliable in Safari)
@@ -442,6 +502,69 @@ def get_index_html() -> str:
                 style: highlightStyle,
                 filter: (f) => f.properties.survey_priority === 'high'
             }).addTo(layers.highlight);
+        }
+
+        // Highlight species spots for selected bird
+        function highlightSpeciesSpots(speciesCode) {
+            if (!map || !layers.highlight || !speciesSpotsData) return;
+
+            // Add highlighted markers for this species
+            const filtered = {
+                type: 'FeatureCollection',
+                features: speciesSpotsData.features.filter(
+                    f => f.properties.species_code === speciesCode
+                )
+            };
+
+            if (filtered.features.length > 0) {
+                var spotStyle = selectedSpeciesSpotStyle;
+                L.geoJSON(filtered, {
+                    pointToLayer: (f, ll) => L.circleMarker(ll, spotStyle(f)),
+                    onEachFeature: (f, layer) => {
+                        const p = f.properties;
+                        const conf = Math.round((p.confidence || 0.5) * 100);
+                        layer.bindPopup(
+                            '<b>' + p.common_name + '</b><br>' +
+                            '<strong>' + p.place_name + '</strong><br>' +
+                            p.why_here + '<br>' +
+                            '<em>Confidence: ' + conf + '%</em>'
+                        );
+                    }
+                }).addTo(layers.highlight);
+
+                // Pan to first spot
+                const firstSpot = filtered.features[0];
+                if (firstSpot && firstSpot.geometry) {
+                    const coords = firstSpot.geometry.coordinates;
+                    map.setView([coords[1], coords[0]], 13);
+                }
+            }
+        }
+
+        // Load spot guide (preferred) or fallback to dossier
+        async function loadSpotGuide(speciesCode) {
+            const content = $('detail-content');
+            try {
+                // Try spot guide first
+                const spotRes = await fetch('/spot_guides/' + speciesCode);
+                if (spotRes.ok) {
+                    const md = await spotRes.text();
+                    content.innerHTML = markdownToHtml(md);
+                    return;
+                }
+                // Fall back to dossier
+                const dossierRes = await fetch('/dossiers/' + speciesCode);
+                if (dossierRes.ok) {
+                    const md = await dossierRes.text();
+                    content.innerHTML = markdownToHtml(md);
+                } else {
+                    content.innerHTML =
+                        '<div class="detail-placeholder">No spot guide available</div>';
+                }
+            } catch (e) {
+                content.innerHTML =
+                    '<div class="detail-placeholder">Load error</div>';
+            }
         }
 
         // Load dossier
@@ -509,6 +632,7 @@ class MapServerHandler(BaseHTTPRequestHandler):
         self.out_path = out_path
         self.layers_path = out_path / "layers"
         self.dossiers_path = out_path / "species_dossiers"
+        self.spot_guides_path = out_path / "spot_guides"
         super().__init__(*args, **kwargs)
 
     def log_message(self, format: str, *args) -> None:
@@ -607,6 +731,16 @@ class MapServerHandler(BaseHTTPRequestHandler):
                 self.send_text(content)
             else:
                 self.send_text("Dossier not found", 404)
+
+        elif path.startswith("/spot_guides/"):
+            species_code = path[13:]  # Remove "/spot_guides/" prefix
+            guide_file = self.spot_guides_path / f"{species_code}.md"
+            if guide_file.exists():
+                with open(guide_file) as f:
+                    content = f.read()
+                self.send_text(content)
+            else:
+                self.send_text("Spot guide not found", 404)
 
         else:
             self.send_json({"error": "Not found"}, 404)

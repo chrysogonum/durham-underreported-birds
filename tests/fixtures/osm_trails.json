@@ -1,0 +1,244 @@
+{
+  "type": "FeatureCollection",
+  "description": "OpenStreetMap trail and access data for Durham County public lands",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Al Buehler Trail",
+        "public_land": "Duke Forest",
+        "type": "trail",
+        "surface": "natural",
+        "length_km": 4.0,
+        "habitats_near": ["mature_forest", "mixed_forest"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-79.025, 36.005],
+          [-79.020, 36.008],
+          [-79.015, 36.010]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gate 25 Entrance",
+        "public_land": "Duke Forest",
+        "type": "trailhead",
+        "parking": true,
+        "parking_spaces": 15,
+        "habitats_near": ["mature_forest", "riparian"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.025, 36.005]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Concrete Bridge Road Trail",
+        "public_land": "Duke Forest",
+        "type": "trail",
+        "surface": "gravel",
+        "length_km": 2.5,
+        "habitats_near": ["riparian", "mixed_forest"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-79.040, 36.000],
+          [-79.035, 36.002],
+          [-79.030, 35.998]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Korstian Division Parking",
+        "public_land": "Duke Forest",
+        "type": "trailhead",
+        "parking": true,
+        "parking_spaces": 10,
+        "habitats_near": ["mature_forest"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.040, 36.000]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fews Ford Trail",
+        "public_land": "Eno River State Park",
+        "type": "trail",
+        "surface": "natural",
+        "length_km": 3.2,
+        "habitats_near": ["riparian", "mature_forest"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-79.050, 36.065],
+          [-79.045, 36.063],
+          [-79.040, 36.060]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fews Ford Access",
+        "public_land": "Eno River State Park",
+        "type": "trailhead",
+        "parking": true,
+        "parking_spaces": 30,
+        "habitats_near": ["riparian", "mature_forest"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.050, 36.065]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pump Station Trail",
+        "public_land": "Eno River State Park",
+        "type": "trail",
+        "surface": "natural",
+        "length_km": 2.8,
+        "habitats_near": ["mature_forest", "mixed_forest"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-79.070, 36.060],
+          [-79.065, 36.058],
+          [-79.060, 36.055]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pump Station Trailhead",
+        "public_land": "Eno River State Park",
+        "type": "trailhead",
+        "parking": true,
+        "parking_spaces": 20,
+        "habitats_near": ["mature_forest"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.070, 36.060]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rolling View Trail",
+        "public_land": "Falls Lake State Recreation Area",
+        "type": "trail",
+        "surface": "natural",
+        "length_km": 5.5,
+        "habitats_near": ["mixed_forest", "lake_wetland", "riparian"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-78.815, 36.015],
+          [-78.805, 36.010],
+          [-78.795, 36.005]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rolling View Access",
+        "public_land": "Falls Lake State Recreation Area",
+        "type": "trailhead",
+        "parking": true,
+        "parking_spaces": 50,
+        "habitats_near": ["mixed_forest", "open_fields"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-78.815, 36.015]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Beaverdam Trail",
+        "public_land": "Falls Lake State Recreation Area",
+        "type": "trail",
+        "surface": "natural",
+        "length_km": 3.0,
+        "habitats_near": ["wetland", "riparian", "mixed_forest"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-78.790, 36.020],
+          [-78.785, 36.018],
+          [-78.780, 36.015]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Beaverdam Parking",
+        "public_land": "Falls Lake State Recreation Area",
+        "type": "trailhead",
+        "parking": true,
+        "parking_spaces": 25,
+        "habitats_near": ["wetland", "riparian"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-78.790, 36.020]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Little River Loop",
+        "public_land": "Little River Regional Park",
+        "type": "trail",
+        "surface": "natural",
+        "length_km": 2.0,
+        "habitats_near": ["mixed_forest", "riparian", "open_fields"]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-79.135, 36.085],
+          [-79.130, 36.083],
+          [-79.125, 36.080]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Little River Main Parking",
+        "public_land": "Little River Regional Park",
+        "type": "trailhead",
+        "parking": true,
+        "parking_spaces": 40,
+        "habitats_near": ["suburban_edge", "mixed_forest"]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.135, 36.085]
+      }
+    }
+  ]
+}

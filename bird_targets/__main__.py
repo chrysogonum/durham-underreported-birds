@@ -15,6 +15,7 @@ from bird_targets.scoring import (
     calculate_underreported_scores,
 )
 from bird_targets.server import run_server
+from bird_targets.spotfinder import export_spot_guides
 
 # Default path for habitat rules (relative to project root)
 DEFAULT_HABITAT_RULES = (
@@ -80,6 +81,16 @@ def cmd_demo(args: argparse.Namespace) -> int:
     write_scores_csv(scores, output_file)
 
     print(f"Wrote {len(scores)} species to {output_file}")
+
+    # Generate spot guides and species_spots.geojson
+    spot_result = export_spot_guides(fixtures_path, out_path, scores)
+    guides_dir = out_path / "spot_guides"
+    print(
+        f"Exported {spot_result['spot_guides_exported']} spot guides to {guides_dir}/"
+    )
+    n_spots = spot_result["species_spots_features"]
+    print(f"Exported species_spots.geojson with {n_spots} spots")
+
     return 0
 
 
@@ -93,13 +104,25 @@ def cmd_export(args: argparse.Namespace) -> int:
         print(f"Error: Fixtures path does not exist: {fixtures_path}", file=sys.stderr)
         return 1
 
+    # Calculate scores first (needed for spot guides)
+    scores = calculate_underreported_scores(fixtures_path)
+
     # Export all layers and dossiers
-    result = export_all(fixtures_path, out_path)
+    result = export_all(fixtures_path, out_path, scores=scores)
 
     layers_dir = out_path / "layers"
     dossiers_dir = out_path / "species_dossiers"
     print(f"Exported {result['layers_exported']} GeoJSON layers to {layers_dir}/")
     print(f"Exported {result['dossiers_exported']} species dossiers to {dossiers_dir}/")
+
+    # Generate spot guides and species_spots.geojson
+    spot_result = export_spot_guides(fixtures_path, out_path, scores)
+    guides_dir = out_path / "spot_guides"
+    n_guides = spot_result["spot_guides_exported"]
+    print(f"Exported {n_guides} spot guides to {guides_dir}/")
+    n_spots = spot_result["species_spots_features"]
+    print(f"Exported species_spots.geojson with {n_spots} spots")
+
     return 0
 
 
