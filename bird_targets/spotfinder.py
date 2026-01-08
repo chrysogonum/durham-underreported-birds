@@ -74,10 +74,16 @@ def generate_spot_guide(
     species_spots: dict,
     habitat_rules: dict,
     trails_data: dict,
+    observer_expected: float = 0.0,
+    habitat_expected: float = 0.0,
+    expected_score: float = 0.0,
+    observed_score: float = 0.0,
+    underreported_score: float = 0.0,
 ) -> str:
     """Generate a spot guide markdown file for a species.
 
     Returns markdown content with:
+    - Under-reported status and scores
     - What habitat exactly
     - Where in Durham to try (top 3-10 named places)
     - How to access (trailhead/parking/nearest trail segment)
@@ -144,10 +150,27 @@ Check public lands with suitable habitat.
 
 """
 
+    # Build scoring section
+    scoring_section = ""
+    if underreported_score > 0:
+        scoring_section = f"""## Why Under-Reported?
+
+This species is **under-reported** in Durham County compared to regional expectations.
+
+| Metric | Score |
+|--------|-------|
+| Adjacent Counties Rate | {observer_expected:.2%} |
+| Habitat Availability | {habitat_expected:.2%} |
+| Expected in Durham | {expected_score:.2%} |
+| Actually Observed | {observed_score:.2%} |
+| **Under-reported Gap** | **{underreported_score:.2%}** |
+
+"""
+
     # Build full guide
     content = f"""# {common_name} - Spot Guide
 
-## What Habitat Exactly
+{scoring_section}## What Habitat Exactly
 
 {habitat_specific}
 
@@ -262,6 +285,11 @@ def export_spot_guides(
             species_spots=species_spots,
             habitat_rules=habitat_rules,
             trails_data=trails_data,
+            observer_expected=score.observer_expected_score,
+            habitat_expected=score.habitat_expected_score,
+            expected_score=score.expected_score,
+            observed_score=score.observed_score,
+            underreported_score=score.underreported_score,
         )
         guide_file = guides_path / f"{score.species_code}.md"
         with open(guide_file, "w") as f:
