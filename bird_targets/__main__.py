@@ -65,8 +65,10 @@ def cmd_demo(args: argparse.Namespace) -> int:
     # Create output directory
     out_path.mkdir(parents=True, exist_ok=True)
 
-    # Get habitat rules path
-    habitat_rules_path = Path(args.habitat_rules) if args.habitat_rules else None
+    # Get habitat rules path (use default if not specified)
+    habitat_rules_path = (
+        Path(args.habitat_rules) if args.habitat_rules else DEFAULT_HABITAT_RULES
+    )
 
     # Calculate scores
     scores = calculate_underreported_scores(
