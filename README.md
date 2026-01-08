@@ -194,7 +194,7 @@ The tool automatically analyzes these counties adjacent to Durham:
 
 The habitat model includes rules for ~33 species commonly under-reported in the NC Piedmont:
 
-**Owls:** Barred Owl, Eastern Screech-Owl, Great Horned Owl
+**Owls:** Barred Owl, Eastern Screech-Owl, Great Horned Owl, Northern Saw-whet Owl
 
 **Forest Birds:** Wood Thrush, Ovenbird, Kentucky Warbler, Worm-eating Warbler, Hooded Warbler, Summer Tanager, Scarlet Tanager
 
