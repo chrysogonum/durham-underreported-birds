@@ -223,7 +223,7 @@ def export_spot_guides(
     fixtures_path: Path,
     out_path: Path,
     scores: list["SpeciesScore"],
-    max_species: int = 10,
+    max_species: int | None = None,
 ) -> dict:
     """Export spot guides and species_spots.geojson.
 
@@ -231,7 +231,7 @@ def export_spot_guides(
         fixtures_path: Path to fixtures directory
         out_path: Output directory
         scores: List of SpeciesScore objects (sorted by underreported score)
-        max_species: Maximum number of species to generate guides for
+        max_species: Max species for GeoJSON (None = all with spot data)
 
     Returns:
         Summary dict with counts of exported files
@@ -247,10 +247,13 @@ def export_spot_guides(
     guides_path.mkdir(parents=True, exist_ok=True)
     layers_path.mkdir(parents=True, exist_ok=True)
 
-    # Generate spot guides for top species
+    # Generate spot guides for ALL species that have spot data
     guides_exported = 0
-    for score in scores[:max_species]:
+    for score in scores:
         if score.underreported_score <= 0:
+            continue
+        # Only generate if we have spot data for this species
+        if score.species_code not in species_spots:
             continue
 
         guide_content = generate_spot_guide(
@@ -265,8 +268,10 @@ def export_spot_guides(
             f.write(guide_content)
         guides_exported += 1
 
-    # Generate species_spots.geojson
-    spots_geojson = generate_species_spots_geojson(scores, species_spots, max_species)
+    # Generate species_spots.geojson (include all species with spot data)
+    spots_geojson = generate_species_spots_geojson(
+        scores, species_spots, max_species or len(scores)
+    )
     with open(layers_path / "species_spots.geojson", "w") as f:
         json.dump(spots_geojson, f, indent=2)
 
