@@ -151,12 +151,24 @@ def generate_species_dossier(
 {habitat_rationale}
 """
 
+    # Determine the basis for under-reported status
+    has_observer = observer_expected_score > 0
+    has_habitat = habitat_expected_score > 0
+
+    if has_observer and has_habitat:
+        basis_text = "based on adjacent county reporting rates and habitat availability"
+    elif has_habitat:
+        basis_text = "based on habitat availability on public lands"
+    elif has_observer:
+        basis_text = "relative to adjacent counties"
+    else:
+        basis_text = "in Durham County"
+
     content = f"""# {common_name} ({species_code})
 
 ## Under-Reported Status
 
-This species is identified as **under-reported** in Durham County relative to
-adjacent counties.
+This species is identified as **under-reported** in Durham County {basis_text}.
 
 ### Scores
 
@@ -287,12 +299,24 @@ def generate_species_dossier_from_data(
 {habitat_rationale}
 """
 
+    # Determine the basis for under-reported status
+    has_observer = observer_expected_score > 0
+    has_habitat = habitat_expected_score > 0
+
+    if has_observer and has_habitat:
+        basis_text = "based on adjacent county reporting rates and habitat availability"
+    elif has_habitat:
+        basis_text = "based on habitat availability on public lands"
+    elif has_observer:
+        basis_text = "relative to adjacent counties"
+    else:
+        basis_text = "in Durham County"
+
     content = f"""# {common_name} ({species_code})
 
 ## Under-Reported Status
 
-This species is identified as **under-reported** in Durham County relative to
-adjacent counties.
+This species is identified as **under-reported** in Durham County {basis_text}.
 
 ### Scores
 
