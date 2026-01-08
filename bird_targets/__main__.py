@@ -106,8 +106,10 @@ def cmd_export(args: argparse.Namespace) -> int:
         print(f"Error: Fixtures path does not exist: {fixtures_path}", file=sys.stderr)
         return 1
 
-    # Calculate scores first (needed for spot guides)
-    scores = calculate_underreported_scores(fixtures_path)
+    # Calculate scores first (needed for spot guides) - use default habitat rules
+    scores = calculate_underreported_scores(
+        fixtures_path, habitat_rules_path=DEFAULT_HABITAT_RULES
+    )
 
     # Export all layers and dossiers
     result = export_all(fixtures_path, out_path, scores=scores)

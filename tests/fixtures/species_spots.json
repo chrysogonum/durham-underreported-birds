@@ -1,5 +1,36 @@
 {
   "_comment": "Species-specific spot recommendations for Durham County birding",
+  "bkbwar": {
+    "habitat_specific": "Mature deciduous and mixed forest with rough-barked trees like oaks and hickories. Forages on bark at all heights, often spiraling up and down trunks and major limbs.",
+    "time_of_day": "morning",
+    "detection_tips": "Listen for thin, squeaky 'weesa-weesa-weesa' song. Often seen creeping along bark like a nuthatch. Active forager, easier to spot than many warblers.",
+    "spots": [
+      {
+        "place_name": "Duke Forest - Al Buehler Trail",
+        "public_land": "Duke Forest",
+        "trailhead": "Gate 25 Entrance",
+        "why_here": "Mature hardwoods with oaks and hickories, excellent bark-foraging habitat",
+        "coordinates": [-79.020, 36.008],
+        "confidence": 0.80
+      },
+      {
+        "place_name": "Eno River - Fews Ford",
+        "public_land": "Eno River State Park",
+        "trailhead": "Fews Ford Access",
+        "why_here": "Large trees along river corridor, good spring migration stopover",
+        "coordinates": [-79.045, 36.063],
+        "confidence": 0.75
+      },
+      {
+        "place_name": "Pump Station Trail",
+        "public_land": "Eno River State Park",
+        "trailhead": "Pump Station Trailhead",
+        "why_here": "Mature forest interior with diverse tree species",
+        "coordinates": [-79.065, 36.057],
+        "confidence": 0.70
+      }
+    ]
+  },
   "brdowl": {
     "habitat_specific": "Mature bottomland hardwood forest with large trees (>12\" DBH), especially oaks and tulip poplars. Prefers areas near streams or swampy lowlands with dense understory.",
     "time_of_day": "dusk, night, dawn",
